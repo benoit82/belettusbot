@@ -1,0 +1,16 @@
+{
+  "name": "belettusbot",
+  "version": "1.0.0",
+  "description": "bot to manage events",
+  "main": "./src/main.js",
+  "author": "Benoît Dubus",
+  "scripts": {
+    "start": "node ./src/main.js",
+    "dev": "nodemon ./src/main.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.3.1",
+    "dotenv": "^8.2.0"
+  }
+}
