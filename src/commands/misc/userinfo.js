@@ -8,7 +8,7 @@ module.exports.run = (client, message, args) => {
 module.exports.help = {
   name: "userinfo",
   aliases: ["userinfo", "ui"],
-  description: "Renvoie les informatins d'un utiisateur mentionné.",
+  description: "Renvoie les informatins d'un utilisateur mentionné.",
   args: true,
   usage: "<@utilisateur>",
   cooldown: 10_000,
