@@ -25,7 +25,7 @@ Réponds par \`oui\` sous ${
     collector.on("collect", async (msg) => {
       if (msg.content === "oui") {
         const messages = await message.channel.messages.fetch();
-        message.channel.bulkDelete(messages, true);
+        await message.channel.bulkDelete(messages, true);
         this.help.typeInfoLog = TYPE.danger.label;
         logAction(
           client,
@@ -38,7 +38,7 @@ Réponds par \`oui\` sous ${
     });
   } else {
     const messages = await message.channel.messages.fetch();
-    messages.forEach((message) => {
+    await messages.forEach((message) => {
       if (message.content.startsWith(PREFIX) || message.author.bot)
         message.delete();
     });
