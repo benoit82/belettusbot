@@ -13,4 +13,5 @@ module.exports.help = {
   args: true,
   usage: "<@utilisateur>",
   cooldown: 10_000,
+  category: "misc",
 };

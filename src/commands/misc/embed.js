@@ -32,4 +32,5 @@ module.exports.help = {
   aliases: ["embed"],
   description: "Renvoie un embed.",
   args: false,
+  category: "misc",
 };
