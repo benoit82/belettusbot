@@ -1,5 +1,5 @@
 const { Client, Collection, Message } = require("discord.js");
-const { PREFIX } = require("./config");
+const { PREFIX, CD_COMMAND_DEFAULT } = require("./config");
 const { readdirSync } = require("fs");
 require("dotenv").config();
 
@@ -49,7 +49,7 @@ client.on("message", (msg) => {
   }
   const timeNow = Date.now();
   const tStamps = client.cooldowns.get(command.help.name);
-  const cdAmount = command.help.cooldown || 5_000;
+  const cdAmount = command.help.cooldown || CD_COMMAND_DEFAULT;
 
   if (tStamps.has(msg.author.id)) {
     const cdExpirationTime = tStamps.get(msg.author.id) + cdAmount;

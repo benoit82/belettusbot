@@ -52,6 +52,7 @@ module.exports.help = {
   description:
     "Nettoie le canal des commandes tapées et les réponses du bot.\nArgument optionel : `?clearlog all` pour effacer **TOUS** les messages du canal.",
   args: false,
+  usage: "<'all'> (optionel)",
   typeInfoLog: TYPE.warning.label,
   category: "misc",
 };

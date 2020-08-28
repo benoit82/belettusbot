@@ -5,3 +5,4 @@ exports.TYPE = {
   danger: { label: "danger", color: "#b50000" },
   default: { color: "#7a7a7a" },
 };
+exports.CD_COMMAND_DEFAULT = 5_000;
