@@ -30,4 +30,8 @@ module.exports = {
       });
     }
   },
+  loadMongoose: (client) => {
+    client.mongoose = require("../utils/mongoose");
+    client.mongoose.init();
+  },
 };
