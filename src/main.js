@@ -5,6 +5,8 @@ require("dotenv").config();
 
 const client = new Client();
 ["commands", "cooldowns"].forEach((x) => (client[x] = new Collection()));
+client.mongoose = require("./utils/mongoose");
+require("./utils/functions")(client);
 
 // load commands from commands folders
 const loadCommands = (dir = "src/commands") => {
@@ -72,6 +74,8 @@ client.on("message", (msg) => {
 });
 
 client.on("ready", () => console.log(`Logged in as ${client.user.tag}!`));
+
+client.mongoose.init();
 
 // log the bot
 client.login(process.env.DISCORD_BOT_TOKEN);
