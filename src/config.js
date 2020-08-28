@@ -1,12 +1,6 @@
 exports.PREFIX = "?";
-exports.TYPEINFO = {
-  INFO: "info",
-  WARNING: "warning",
-  DANGER: "danger",
-};
-
-exports.COLOR = {
-  INFO: "#00d921",
-  WARNING: "#d5d900",
-  DANGER: "#d94c00",
+exports.TYPE = {
+  info: { label: "info", color: "#00d921" },
+  warning: { label: "warning", color: "#d5d900" },
+  danger: { label: "danger", color: "#b50000" },
 };

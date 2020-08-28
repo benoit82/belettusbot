@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const { COLOR, TYPEINFO } = require("../config");
+const { TYPE } = require("../config");
 
 module.exports.logAction = (
   client,
@@ -7,22 +7,8 @@ module.exports.logAction = (
   { name, typeInfoLog },
   description
 ) => {
-  // color setup.
-  let color = "";
-  switch (typeInfoLog) {
-    case TYPEINFO.INFO:
-      color = COLOR.INFO;
-      break;
-    case TYPEINFO.WARNING:
-      color = COLOR.WARNING;
-      break;
-    case TYPEINFO.DANGER:
-      color = COLOR.DANGER;
-      break;
-    default:
-      color = "#7a7a7a"; // grey - no info
-      break;
-  }
+  const color = TYPE[typeInfoLog].color || "#7a7a7a";
+
   const embed = new MessageEmbed()
     .setAuthor(message.author.username, message.author.avatarURL())
     .setColor(color)

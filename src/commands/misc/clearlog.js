@@ -1,4 +1,4 @@
-const { PREFIX, TYPEINFO } = require("../../config");
+const { PREFIX, TYPE } = require("../../config");
 const { MessageCollector } = require("discord.js");
 const { logAction } = require("../../utils/botlog");
 
@@ -26,7 +26,7 @@ Réponds par \`oui\` sous ${
       if (msg.content === "oui") {
         const messages = await message.channel.messages.fetch();
         message.channel.bulkDelete(messages, true);
-        this.help.typeInfoLog = TYPEINFO.DANGER;
+        this.help.typeInfoLog = TYPE.danger.label;
         logAction(
           client,
           message,
@@ -52,5 +52,5 @@ module.exports.help = {
   description:
     "Nettoie le canal des commandes tapées et les réponses du bot.\nArgument optionel : `?clearlog all` pour effacer **TOUS** les messages du canal.",
   args: false,
-  typeInfoLog: TYPEINFO.WARNING,
+  typeInfoLog: TYPE.warning.label,
 };
