@@ -7,7 +7,7 @@ module.exports.logAction = (
   { name, typeInfoLog },
   description
 ) => {
-  const color = TYPE[typeInfoLog].color || "#7a7a7a";
+  const color = TYPE[typeInfoLog].color || TYPE.default.color;
 
   const embed = new MessageEmbed()
     .setAuthor(message.author.username, message.author.avatarURL())
