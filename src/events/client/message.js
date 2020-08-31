@@ -2,6 +2,8 @@ const { Collection } = require("discord.js");
 const { PREFIX, CD_COMMAND_DEFAULT } = require("../../config");
 
 module.exports = (client, message) => {
+  if (message.channel.type === "dm")
+    return client.emit("directMessage", message);
   if (!message.content.startsWith(PREFIX) || message.author.bot) return;
   const args = message.content.trim().slice(PREFIX.length).split(/ +/);
   const commandName = args.shift().toLowerCase();

@@ -11,7 +11,7 @@ const guildSchema = mongoose.Schema({
   },
   logChannel: {
     type: String,
-    default: defaults.logChannel,
+    default: defaults.logChannel.id,
   },
 });
 

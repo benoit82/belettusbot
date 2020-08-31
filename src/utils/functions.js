@@ -7,6 +7,11 @@ module.exports = async (client) => {
     const createGuild = await new Guild(merged);
     createGuild
       .save()
-      .then((g) => console.log(`Nouveau serveur => ${g.guildName}`));
+      .then((g) => console.log(`Nouveau serveur => ${g.guildName}`))
+      .catch((err) =>
+        console.error(
+          `Une erreur est survenue durant le processus de création d'enregistrement de la guilde (serveur discord) : ${err.message}`
+        )
+      );
   };
 };

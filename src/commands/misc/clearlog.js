@@ -1,4 +1,5 @@
 const { PREFIX, TYPE } = require("../../config");
+const { MESSAGES } = require("../../utils/constants");
 const { MessageCollector } = require("discord.js");
 const { logAction } = require("../../utils/botlog");
 
@@ -46,13 +47,4 @@ Réponds par \`oui\` sous ${
   }
 };
 
-module.exports.help = {
-  name: "clearlog",
-  aliases: ["clearlog"],
-  description:
-    "Nettoie le canal des commandes tapées et les réponses du bot.\nArgument optionel : `?clearlog all` pour effacer **TOUS** les messages du canal.",
-  args: false,
-  usage: "<'all'> (optionel)",
-  typeInfoLog: TYPE.warning.label,
-  category: "misc",
-};
+module.exports.help = MESSAGES.COMMANDS.MISC.CLEARLOG;

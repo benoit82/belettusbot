@@ -1,5 +1,8 @@
 const { MessageEmbed } = require("discord.js");
-const { TYPE } = require("../config");
+const {
+  TYPE,
+  DEFAULTSETTINGS: { logChannel },
+} = require("../config");
 
 module.exports.logAction = (
   client,
@@ -18,5 +21,5 @@ module.exports.logAction = (
     .setTimestamp()
     .setDescription(description);
 
-  client.channels.cache.get("748824009629761568").send(embed);
+  client.channels.cache.get(logChannel.id).send(embed);
 };

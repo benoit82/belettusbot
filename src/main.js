@@ -1,6 +1,6 @@
 const { Client, Collection } = require("discord.js");
 const { PREFIX, CD_COMMAND_DEFAULT } = require("./config");
-const { loadCommands, loadEvents, loadMongoose } = require("./utils/init");
+const { loadCommands, loadEvents, loadMongoose } = require("./utils/loader");
 require("dotenv").config();
 
 const client = new Client();

@@ -12,6 +12,9 @@ module.exports = {
   CD_COMMAND_DEFAULT: 5_000,
   DEFAULTSETTINGS: {
     prefix: "bb!",
-    logChannel: "belettusbot-log",
+    logChannel: {
+      name: "belettusbot-log",
+      id: "748824009629761568",
+    },
   },
 };

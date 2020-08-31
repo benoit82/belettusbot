@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const { MESSAGES } = require("../../utils/constants");
 const { PREFIX, TYPE, CD_COMMAND_DEFAULT } = require("../../config");
 const { readdirSync } = require("fs");
 const categoryList = readdirSync("src/commands");
@@ -51,12 +52,4 @@ Pour plus d'informations sur une commande, tapes \`${PREFIX}help <command_name>\
   }
 };
 
-module.exports.help = {
-  name: "help",
-  aliases: ["help"],
-  description: "liste les commandes du bot",
-  args: false,
-  category: "misc",
-  cooldown: 1_000,
-  usage: "<command_name>",
-};
+module.exports.help = MESSAGES.COMMANDS.MISC.HELP;
