@@ -10,8 +10,14 @@ const guildSchema = mongoose.Schema({
     default: defaults.prefix,
   },
   logChannel: {
-    type: String,
-    default: defaults.logChannel.id,
+    id: {
+      type: String,
+      default: defaults.logChannel.id,
+    },
+    name: {
+      type: String,
+      default: defaults.logChannel.name,
+    },
   },
 });
 

@@ -1,9 +1,9 @@
-const { PREFIX, TYPE } = require("../../config");
 const { MESSAGES } = require("../../utils/constants");
 const { MessageCollector } = require("discord.js");
 const { logAction } = require("../../utils/botlog");
 
 module.exports.run = async (client, message, args) => {
+  const { PREFIX, TYPE } = client.config;
   if (args[0] === "all") {
     const time = 5_000;
     const collector = new MessageCollector(

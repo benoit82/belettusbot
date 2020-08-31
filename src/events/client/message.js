@@ -1,10 +1,12 @@
 const { Collection } = require("discord.js");
 const { PREFIX, CD_COMMAND_DEFAULT } = require("../../config");
 
-module.exports = (client, message) => {
+module.exports = async (client, message) => {
   if (message.channel.type === "dm")
     return client.emit("directMessage", message);
   if (!message.content.startsWith(PREFIX) || message.author.bot) return;
+
+  const settings = await client.getGuild(message.guild);
   const args = message.content.trim().slice(PREFIX.length).split(/ +/);
   const commandName = args.shift().toLowerCase();
 
@@ -48,5 +50,5 @@ module.exports = (client, message) => {
   setTimeout(() => tStamps.delete(message.author.id), cdAmount);
 
   // finally, run the command
-  command.run(client, message, args);
+  command.run(client, message, args, settings);
 };
