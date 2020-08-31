@@ -5,19 +5,13 @@ const guildSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   guildID: String,
   guildName: String,
+  logChannel: {
+    type: String,
+    default: defaults.logChannel,
+  },
   prefix: {
     type: String,
     default: defaults.prefix,
-  },
-  logChannel: {
-    id: {
-      type: String,
-      default: defaults.logChannel.id,
-    },
-    name: {
-      type: String,
-      default: defaults.logChannel.name,
-    },
   },
 });
 

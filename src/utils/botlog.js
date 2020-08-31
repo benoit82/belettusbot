@@ -1,8 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const {
-  TYPE,
-  DEFAULTSETTINGS: { logChannel },
-} = require("../config");
+const { TYPE } = require("../config");
 
 module.exports.logAction = (
   client,
@@ -10,16 +7,17 @@ module.exports.logAction = (
   { name, typeInfoLog },
   description
 ) => {
-  const color = TYPE[typeInfoLog]
-    ? TYPE[typeInfoLog].color
-    : TYPE.default.color;
+  if (client.settings.logChannel) {
+    const color = TYPE[typeInfoLog]
+      ? TYPE[typeInfoLog].color
+      : TYPE.default.color;
+    const embed = new MessageEmbed()
+      .setAuthor(message.author.username, message.author.avatarURL())
+      .setColor(color)
+      .setTitle(name)
+      .setTimestamp()
+      .setDescription(description);
 
-  const embed = new MessageEmbed()
-    .setAuthor(message.author.username, message.author.avatarURL())
-    .setColor(color)
-    .setTitle(name)
-    .setTimestamp()
-    .setDescription(description);
-
-  client.channels.cache.get(logChannel.id).send(embed);
+    client.channels.cache.get(client.settings.logChannel).send(embed);
+  }
 };

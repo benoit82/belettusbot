@@ -2,7 +2,7 @@ const { Client, Collection } = require("discord.js");
 const { loadCommands, loadEvents, loadMongoose } = require("./utils/loader");
 require("dotenv").config();
 
-const client = new Client();
+const client = new Client({ partials: ["MESSAGE", "CHANNEL", "REACTION"] });
 client.config = require("./config");
 ["commands", "cooldowns"].forEach((x) => (client[x] = new Collection()));
 

@@ -1,15 +1,16 @@
 const { MessageEmbed } = require("discord.js");
 const { MESSAGES } = require("../../utils/constants");
-const { PREFIX, TYPE, CD_COMMAND_DEFAULT } = require("../../config");
+const { TYPE, CD_COMMAND_DEFAULT } = require("../../config");
 const { readdirSync } = require("fs");
 const categoryList = readdirSync("src/commands");
 
 module.exports.run = (client, message, args) => {
+  const { settings } = client;
   if (!args.length) {
     const embed = new MessageEmbed().setColor(TYPE.default.color).addField(
       "Liste des commandes",
       `Une liste de toutes les sous-catégories disponibles et leurs commandes.
-Pour plus d'informations sur une commande, tapes \`${PREFIX}help <command_name>\``
+Pour plus d'informations sur une commande, tapes \`${settings.prefix}help <command_name>\``
     );
 
     for (const category of categoryList) {
@@ -40,8 +41,8 @@ Pour plus d'informations sur une commande, tapes \`${PREFIX}help <command_name>\
       .addField(
         "Utilisation",
         command.help.usage
-          ? `${PREFIX + command.help.name} ${command.help.usage}`
-          : PREFIX + command.help.name,
+          ? `${settings.prefix + command.help.name} ${command.help.usage}`
+          : settings.prefix + command.help.name,
         true
       );
 

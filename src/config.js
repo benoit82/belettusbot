@@ -1,7 +1,6 @@
 require("dotenv").config();
 
 module.exports = {
-  PREFIX: "!",
   DBCONNECTION: `mongodb+srv://${process.env.MONGODB_ATLAS_USER}:${process.env.MONGODB_ATLAS_PWD}@bbotdb.xhqrs.mongodb.net/belettusDB`,
   TYPE: {
     info: { label: "info", color: "#00d921" },
@@ -12,9 +11,6 @@ module.exports = {
   CD_COMMAND_DEFAULT: 5_000,
   DEFAULTSETTINGS: {
     prefix: "!",
-    logChannel: {
-      name: "belettusbot-log",
-      id: "748824009629761568",
-    },
+    logChannel: "none",
   },
 };
