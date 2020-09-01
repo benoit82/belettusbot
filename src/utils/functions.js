@@ -39,9 +39,9 @@ module.exports = async (client) => {
       .save()
       .then((event) =>
         channel.send(
-          `Evènement créé => ${event.title} pour le ${moment(event.rdv).format(
-            "LLLL"
-          )}`
+          `Evènement créé => ${event.title} pour le **${moment(
+            event.rdv
+          ).format("LLLL")}**`
         )
       )
       .catch((err) =>
