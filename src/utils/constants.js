@@ -25,6 +25,17 @@ const MESSAGES = {
         isUserAdmin: true,
       },
     },
+    EVENT: {
+      ADDEVENT: {
+        name: "addevent",
+        aliases: ["addevent"],
+        description: "Ajoute un évènement pour la communauté (FFXIV ou autre)",
+        usage: '"<titre>" (<url illustration>) optionnel',
+        args: true,
+        typeInfoLog: TYPE.info.label,
+        category: "event",
+      },
+    },
     MISC: {
       CLEARLOG: {
         name: "clearlog",

@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
-const { Guild } = require("../models");
+const { Guild, Event } = require("../models");
+const moment = require("moment");
+moment.locale("fr");
 
 module.exports = async (client) => {
   client.createGuild = async (guild) => {
@@ -23,6 +25,40 @@ module.exports = async (client) => {
 
   client.updateGuild = async (guild, settings) => {
     let data = await client.getGuild(guild);
+    if (typeof data !== "object") data = {};
+    for (const key in settings) {
+      if (data[key] !== settings[key]) data[key] = settings[key];
+    }
+    return data.updateOne(settings);
+  };
+
+  client.createEvent = async (event, channel) => {
+    const merged = Object.assign({ _id: mongoose.Types.ObjectId() }, event);
+    const createEvent = await new Event(merged);
+    createEvent
+      .save()
+      .then((event) =>
+        channel.send(
+          `Evènement créé => ${event.title} pour le ${moment(event.rdv).format(
+            "LLLL"
+          )}`
+        )
+      )
+      .catch((err) =>
+        channel.send(
+          `Une erreur est survenue durant le processus de la création de l'évènement : ${err.message}`
+        )
+      );
+  };
+
+  client.getEvent = async (event) => {
+    const data = await Event.findOne({ createdAt: event.createdAt });
+    if (data) return data;
+    return;
+  };
+
+  client.updateEvent = async (event, settings) => {
+    let data = await client.getEvent(event);
     if (typeof data !== "object") data = {};
     for (const key in settings) {
       if (data[key] !== settings[key]) data[key] = settings[key];
