@@ -31,6 +31,16 @@ Pour plus d'informations sur une commande, tapes \`${settings.prefix}help <comma
         (cmd) => cmd.help.aliases && cmd.help.aliases.includes(args[0])
       );
     const cd = command.help.cooldown || CD_COMMAND_DEFAULT;
+
+    let usage = "";
+    if (command.help.usage) {
+      command.help.usage.forEach((u) => {
+        usage += `${settings.prefix + command.help.name} ${u}\n`;
+      });
+    } else {
+      usage = settings.prefix + command.help.name;
+    }
+
     const embed = new MessageEmbed()
       .setColor(TYPE.default.color)
       .setTitle(`\`${command.help.name}\``)
@@ -38,13 +48,7 @@ Pour plus d'informations sur une commande, tapes \`${settings.prefix}help <comma
         "Description",
         `${command.help.description} (cd: ${cd / 1000} secs)`
       )
-      .addField(
-        "Utilisation",
-        command.help.usage
-          ? `${settings.prefix + command.help.name} ${command.help.usage}`
-          : settings.prefix + command.help.name,
-        true
-      );
+      .addField("Utilisation", usage, true);
 
     if (command.help.aliases.length > 1)
       embed.addField("Alias", command.help.aliases.join(", "), true);
