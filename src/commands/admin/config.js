@@ -14,8 +14,10 @@ module.exports.run = async (client, message, args) => {
         `Prefix mis à jour: \`${settings.prefix}\` => \`${newSetting}\``
       );
     }
-    return message.channel.send("`" + settings.prefix + "`");
+    message.channel.send("`" + settings.prefix + "`");
   }
+  // settings update
+  client.settings = await client.getGuild(message.guild);
 };
 
 module.exports.help = MESSAGES.COMMANDS.ADMIN.CONFIG;
