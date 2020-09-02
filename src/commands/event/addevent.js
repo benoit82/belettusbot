@@ -86,8 +86,7 @@ Pour plus d'information sur la commande, tapes la commande \`${settings.prefix}h
             });
 
           message.reply(
-            `Le message d'inscription a été créé, épinglé et est disponible ici : ${urlEmbedMsg}\n
-            N'oublie pas de t'y inscrire en ajoutant une réaction 😜.`
+            `Le message d'inscription a été créé, épinglé et est disponible ici : ${urlEmbedMsg}\nN'oublie pas de t'y inscrire en ajoutant une réaction 😜.`
           );
         }
         botIsWaitingForFeedback = false;
