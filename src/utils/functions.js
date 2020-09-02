@@ -57,7 +57,9 @@ exports.saveChannel = async (client, message, args, newSetting) => {
 };
 
 exports.embedCreateFromEvent = (client, message, event) => {
-  const { author } = message;
+  const author = message.channel.members.find(
+    (member) => member.id === event.creator
+  ).user;
   let players = "";
   let setPlayers = new Set(event.players);
   setPlayers.forEach((pID) => {
