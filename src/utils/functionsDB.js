@@ -40,15 +40,15 @@ module.exports = async (client) => {
    */
   client.createEvent = async (event, channel) => {
     const merged = Object.assign({ _id: mongoose.Types.ObjectId() }, event);
-    const createEvent = await new Event(merged);
+    const createEvt = await new Event(merged);
     try {
-      const eventCreated = await createEvent.save();
+      const eventCreated = await createEvt.save();
       channel.send(
         `Evènement créé => ${event.title} pour le **${moment(event.rdv).format(
           "LLLL"
         )}**`
       );
-      return true;
+      return eventCreated;
     } catch (error) {
       channel.send(
         `⚠️ Une erreur est survenue durant le processus de la création de l'évènement ⚠️\n${error.message}\nVeuillez recommencer ultérieurement.`
@@ -58,7 +58,7 @@ module.exports = async (client) => {
   };
 
   client.getEvent = async (event) => {
-    const data = await Event.findOne({ createdAt: event.createdAt });
+    const data = await Event.findOne({ messageID: event.messageID });
     if (data) return data;
     return;
   };

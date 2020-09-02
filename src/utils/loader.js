@@ -31,13 +31,18 @@ const loadEvents = (client, dir = "src/events") => {
   }
 };
 
-const loadMongoose = (client) => {
+const loadMongoose = async (client) => {
   client.mongoose = require("./mongoose");
   client.mongoose.init();
+};
+
+const loadGuildInfo = async (client) => {
+  require("./functionsDB")(client);
 };
 
 module.exports = {
   loadCommands,
   loadEvents,
   loadMongoose,
+  loadGuildInfo,
 };

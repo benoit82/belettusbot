@@ -2,7 +2,7 @@ const { Collection } = require("discord.js");
 const { CD_COMMAND_DEFAULT } = require("../../config");
 
 module.exports = async (client, message) => {
-  client.settings = await client.getGuild(message.guild);
+  if (!client.settings) client.settings = await client.getGuild(message.guild);
   const { settings } = client;
   if (message.channel.type === "dm")
     return client.emit("directMessage", message);
@@ -18,6 +18,12 @@ module.exports = async (client, message) => {
       (cmd) => cmd.help.aliases && cmd.help.aliases.includes(commandName)
     );
   if (!command) return;
+
+  // check if event channel has been configure for eventCmd
+  if (settings.eventChannel === "" && commandName.match(/(addevent)/))
+    return message.channel.send(
+      "Il faut configurer le salon d'annonce des évènements en premier lieu, par la commande `config`.\nIl faut les droit administrateur du serveur pour l'utiliser.\nConsulte la commande `help` pour plus d'information."
+    );
 
   // args checker
   if (command.help.args && !args.length) {

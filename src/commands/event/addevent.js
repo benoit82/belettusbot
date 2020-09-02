@@ -1,18 +1,23 @@
 const { MESSAGES } = require("../../utils/constants");
-const { getFormatFromDate } = require("../../utils/functions");
+const {
+  getFormatFromDate,
+  embedCreateFromEvent,
+} = require("../../utils/functions");
+const { MessageCollector, MessageEmbed } = require("discord.js");
 const moment = require("moment");
-const { MessageCollector } = require("discord.js");
+moment.locale("fr");
 
 module.exports.run = (client, message, args) => {
-  //client.channels.cache.find("name", "évents").send("coucou");
+  const { settings } = client;
   const { channel } = message;
   const helpCmd = `
-Pour plus d'information sur la commande, tapes la commande \`${client.settings.prefix}help ${this.help.name}\``;
+Pour plus d'information sur la commande, tapes la commande \`${settings.prefix}help ${this.help.name}\``;
   const nowFormat = getFormatFromDate(new Date());
   const dateFormatShowExample = `Merci de respecter ce format de saisie :\n-***\`JJMMAAAA HH mm (<description de l'évènement>) optionnel\`***\n  Exemple : \`${nowFormat}\` pour le \`${moment(
     nowFormat,
     "DDMMYYYY HH mm"
   ).format("LLLL")}\` \n-***\`stop\`*** pour ***annuler la commande***`;
+
   if (!args[0].startsWith('"'))
     return message.reply(
       `L'argument du titre n'est pas entouré des caractères \`"\`, retapes la commande.${helpCmd}`
@@ -27,14 +32,12 @@ Pour plus d'information sur la commande, tapes la commande \`${client.settings.p
     return channel.send(
       `L'argument de l'URL de l'image n'est pas valide, retapes la commande.${helpCmd}`
     );
-  const image =
-    step1args[1] || "https://www.fffury.com/FF9/Images/Chocobos/Chocobos-1.png";
   let newEvent = {
     title: step1args[0],
-    image,
     creator: message.author.id,
     guildID: message.guild.id,
   };
+  if (step1args[1]) newEvent.image = step1args[1];
 
   channel.send(`Date et heure du rendez-vous ? ${dateFormatShowExample}`);
   const collector = new MessageCollector(
@@ -62,9 +65,29 @@ Pour plus d'information sur la commande, tapes la commande \`${client.settings.p
         const description = rdvArgs.slice(3).join(" ");
         channel.send("J'enregistre l'évènement...");
         newEvent = { ...newEvent, rdv, description };
-        if (await client.createEvent(newEvent, channel)) {
+        const evt = await client.createEvent(newEvent, channel);
+        if (evt) {
+          // creation of the embed msg for event channel
+          const evtEmbed = embedCreateFromEvent(client, message, evt);
+
+          //send embed to event channel
+          let urlEmbedMsg = "";
+          await client.channels.cache
+            .get(settings.eventChannel)
+            .send(evtEmbed)
+            .then(async (msg) => {
+              urlEmbedMsg = msg.url;
+              // enregistrement du message et son url dans l'evenement en BD
+              await client.updateEvent(evt, {
+                messageLink: urlEmbedMsg,
+                messageID: msg.id,
+              });
+              msg.pin({ reason: "nouvel évènement" });
+            });
+
           message.reply(
-            "N'oublie pas de t'y inscrire en ajoutant une réaction 😜."
+            `Le message d'inscription a été créé, épinglé et est disponible ici : ${urlEmbedMsg}\n
+            N'oublie pas de t'y inscrire en ajoutant une réaction 😜.`
           );
         }
         botIsWaitingForFeedback = false;
