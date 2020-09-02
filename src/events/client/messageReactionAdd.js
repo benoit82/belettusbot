@@ -5,11 +5,7 @@ module.exports = async (client, messageReaction, user) => {
   // retrieving the event
   const eventTarget = await client.getEvent({ messageID: message.id });
   if (eventTarget) {
-    const { username } = user;
-    const players = [
-      ...eventTarget.players,
-      { [username]: [...[username], messageReaction.emoji.id] },
-    ];
+    const players = [...eventTarget.players, user.id];
     await client.updateEvent(eventTarget, { players });
   }
 };
