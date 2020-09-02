@@ -69,6 +69,7 @@ module.exports = async (client) => {
     for (const key in settings) {
       if (data[key] !== settings[key]) data[key] = settings[key];
     }
-    return data.updateOne(settings);
+    await data.updateOne(settings);
+    return await client.getEvent(event);
   };
 };

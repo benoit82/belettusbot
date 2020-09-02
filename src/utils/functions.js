@@ -57,8 +57,21 @@ exports.saveChannel = async (client, message, args, newSetting) => {
 };
 
 exports.embedCreateFromEvent = (client, message, event) => {
+  const { author } = message;
+  let players = "";
+  let setPlayers = new Set(event.players);
+  setPlayers.forEach((pID) => {
+    players +=
+      message.channel.guild.members.cache.find(
+        (member) => member.user.id === pID
+      ).user.username + ", ";
+  });
+  players =
+    players.length > 0
+      ? players.substr(0, players.length - ", ".length)
+      : "Aucun inscrit";
   const me = new MessageEmbed()
-    .setAuthor(message.author.username, message.author.avatarURL())
+    .setAuthor(author.username, author.avatarURL())
     .setColor(
       event.isActive
         ? client.config.TYPE.info.color
@@ -73,7 +86,7 @@ exports.embedCreateFromEvent = (client, message, event) => {
       "`Heure du rendez-vous` : ",
       `**${moment(event.rdv).format("LLLL")}**`
     )
-    .addField("`Joueurs` : ", `**${event.players}**`)
+    .addField("`Joueurs` : ", `**${players}**`)
     .setTimestamp();
 
   if (event.image && event.image !== "") {
