@@ -10,7 +10,7 @@ loadCommands(client);
 loadEvents(client);
 loadMongoose(client);
 //add mongoose custom options to client
-require("./utils/functions")(client);
+require("./utils/functionsDB")(client);
 
 // log the bot
 client.login(process.env.DISCORD_BOT_TOKEN);
