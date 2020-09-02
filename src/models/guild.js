@@ -9,6 +9,10 @@ const guildSchema = mongoose.Schema({
     type: String,
     default: defaults.logChannel,
   },
+  eventChannel: {
+    type: String,
+    default: defaults.eventChannel,
+  },
   prefix: {
     type: String,
     default: defaults.prefix,

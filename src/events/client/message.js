@@ -23,7 +23,10 @@ module.exports = async (client, message) => {
   if (command.help.args && !args.length) {
     let noArgsReply = `Il faut des arguments pour cette commande, ${message.author}.`;
     if (command.help.usage)
-      noArgsReply += `\nVoici comment utiliser la commande : \`${settings.prefix}${command.help.name} ${command.help.usage}\``;
+      noArgsReply += "\nVoici comment utiliser la commande :";
+    command.help.usage.forEach((u) => {
+      noArgsReply += `\n \`${settings.prefix}${command.help.name} ${u}\``;
+    });
     return message.channel.send(noArgsReply);
   }
 

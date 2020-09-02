@@ -11,6 +11,7 @@ module.exports = {
   CD_COMMAND_DEFAULT: 5_000,
   DEFAULTSETTINGS: {
     prefix: "bb!",
-    logChannel: "none",
+    logChannel: "",
+    eventChannel: "",
   },
 };

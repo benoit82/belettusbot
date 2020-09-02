@@ -8,7 +8,11 @@ const MESSAGES = {
         aliases: ["config"],
         description: "configuration du bot pour le serveur discord",
         args: true,
-        usage: ["<key_to_update> <value>"],
+        usage: [
+          "logChannel <id_du_salon | nom_du_salon (sans le #)>",
+          "eventChannel <id_du_salon | nom_du_salon (sans le #)>",
+          "prefix <valeur>",
+        ],
         typeInfoLog: TYPE.info.label,
         category: "admin",
         isUserAdmin: true,
