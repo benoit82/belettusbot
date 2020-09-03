@@ -33,11 +33,23 @@ const MESSAGES = {
       ADDEVENT: {
         name: "addevent",
         aliases: ["addevent"],
-        description: "Ajoute un évènement pour la communauté (FFXIV ou autre)",
+        description:
+          "Ajoute un évènement pour la communauté, FFXIV ou autres... Même les soirées barbec'!",
         usage: ['"<titre>"', '"<titre>" <url illustration>'],
         args: true,
         typeInfoLog: TYPE.info.label,
         category: "event",
+      },
+      CLEAREVENTS: {
+        name: "clearevents",
+        aliases: ["clearevents"],
+        description:
+          "Purge la base de donnée des évents du serveur discord qui sont dépassé.",
+        usage: [""],
+        args: false,
+        typeInfoLog: TYPE.danger.label,
+        category: "event",
+        isUserAdmin: true,
       },
     },
     MISC: {
@@ -59,15 +71,6 @@ const MESSAGES = {
         category: "misc",
         cooldown: 1_000,
         usage: ["<command_name>"],
-      },
-      USERINFO: {
-        name: "userinfo",
-        aliases: ["userinfo", "ui"],
-        description: "Renvoie les informatins d'un utilisateur mentionné.",
-        args: true,
-        usage: ["<@utilisateur>"],
-        cooldown: 10_000,
-        category: "misc",
       },
       TEST: {
         name: "test",

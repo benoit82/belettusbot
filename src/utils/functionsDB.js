@@ -63,6 +63,18 @@ module.exports = async (client) => {
     return;
   };
 
+  client.removeOldEvents = async (guild) => {
+    const query = {
+      rdv: { $lte: moment() },
+      guildID: guild.id,
+    };
+    const datas = await Event.find(query);
+    if (datas) {
+      //TODO unpin msg
+      await Event.deleteMany(query, (err) => console.log(err));
+    }
+  };
+
   client.updateEvent = async (event, settings) => {
     let data = await client.getEvent(event);
     if (typeof data !== "object") data = {};
