@@ -60,7 +60,7 @@ Pour plus d'information sur la commande, tapes la commande \`${settings.prefix}h
       );
     } else {
       // date management
-      let rdv = moment(rdvArgs.slice(0, 2).join(), "DDMMYYYYHHmm").toJSON();
+      let rdv = moment(rdvArgs.slice(0, 3).join(), "DDMMYYYYHHmm").toJSON();
       if (rdv !== null && !moment(rdv).isBefore(Date.now())) {
         const description = rdvArgs.slice(3).join(" ");
         channel.send("J'enregistre l'évènement...");
