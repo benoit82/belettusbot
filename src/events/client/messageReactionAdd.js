@@ -5,6 +5,19 @@ module.exports = async (client, messageReaction, user) => {
   const { message } = messageReaction;
   if (!client.settings) client.settings = await client.getGuild(message.guild);
   if (!message.channel.id === client.settings.eventChannel) return;
+
+  // react emoji check
+  let tabAvailableEmojiID = [];
+  const tmpTab = Object.entries(client.config.JOB_EMOJI).forEach((role) => {
+    Object.entries(role).forEach((job) => {
+      if (job[0] === "1")
+        tabAvailableEmojiID = [...tabAvailableEmojiID, Object.values(job[1])];
+    });
+  });
+  tabAvailableEmojiID = tabAvailableEmojiID.flat();
+  // TODO : si la condition dans le log est vrai, alors c'est un emoji de role sinon on éfface la réaction sans toucher à la BD
+  console.log(tabAvailableEmojiID.includes(messageReaction.emoji.id));
+
   // retrieving the event
   let eventTarget = await client.getEvent({ messageID: message.id });
   if (messageReaction.partial) {

@@ -10,7 +10,7 @@ const eventSchema = mongoose.Schema({
   rdv: Date, // date/time of the event
   messageLink: String, // link to discord message
   messageID: String, // discord message ID => index for retrieve an event
-  players: [String], // player list
+  players: Array, // player list
   creator: String, // member guild tag
   createdAt: {
     type: Number,
