@@ -58,6 +58,7 @@ exports.saveChannel = async (client, message, args, newSetting) => {
 };
 
 exports.embedCreateFromEvent = (client, message, event) => {
+  const playerFieldSeparator = ", ";
   const author = message.channel.members.find(
     (member) => member.id === event.creator
   ).user;
@@ -67,11 +68,11 @@ exports.embedCreateFromEvent = (client, message, event) => {
     players +=
       message.channel.guild.members.cache.find(
         (member) => member.user.id === pID
-      ).user.username + ", ";
+      ).user.username + playerFieldSeparator;
   });
   players =
     players.length > 0
-      ? players.substr(0, players.length - ", ".length)
+      ? players.substr(0, players.length - playerFieldSeparator.length)
       : "Aucun inscrit";
   const me = new MessageEmbed()
     .setAuthor(author.username, author.avatarURL())

@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const { Guild, Event } = require("../models");
 const moment = require("moment");
+const guild = require("../models/guild");
+const { logAction } = require("./botlog");
+const { embedCreateFromEvent } = require("./functions");
 moment.locale("fr");
 
 module.exports = async (client) => {
@@ -63,15 +66,39 @@ module.exports = async (client) => {
     return;
   };
 
-  client.removeOldEvents = async (guild) => {
+  client.removeOldEvents = async (guild, message = null) => {
+    const { channels, settings } = client;
     const query = {
       rdv: { $lte: moment() },
       guildID: guild.id,
     };
     const datas = await Event.find(query);
     if (datas) {
-      //TODO unpin msg
-      await Event.deleteMany(query, (err) => console.log(err));
+      const evtChannel = await channels.fetch(settings.eventChannel);
+      // unpin old event / setStatus on close
+      datas.forEach(async (evt) => {
+        evt.status = client.config.EVENT_STATUS.close;
+        const msg = await evtChannel.messages.fetch(evt.messageID);
+        msg.edit(embedCreateFromEvent(client, msg, evt));
+        if (msg.pinned) msg.unpin({ reason: "évènement passé." });
+      });
+      await Event.deleteMany(query, (err) => {
+        const feedback = err
+          ? `Une erreur s'est déclanché lors de la suppression des anciens events\n${err.message}`
+          : `Suppression des anciens events (nombre : ${datas.length})`;
+        const typeInfoLog = err
+          ? client.config.TYPE.danger.label
+          : client.config.TYPE.warning.label;
+        return logAction(
+          client,
+          {
+            name: "clearEvents",
+            typeInfoLog,
+          },
+          feedback,
+          message
+        );
+      });
     }
   };
 

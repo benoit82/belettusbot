@@ -43,7 +43,7 @@ Réponds par \`oui\` sous ${
       if (message.content.startsWith(PREFIX) || message.author.bot)
         message.delete();
     });
-    logAction(client, message, this.help, "Canal de discution nétoyé.");
+    logAction(client, this.help, "Canal de discution nétoyé.", message);
   }
 };
 

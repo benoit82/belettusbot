@@ -5,6 +5,7 @@ const {
 } = require("../../utils/functions");
 const { MessageCollector, MessageEmbed } = require("discord.js");
 const moment = require("moment");
+const { logAction } = require("../../utils/botlog");
 moment.locale("fr");
 
 module.exports.run = (client, message, args) => {
@@ -87,6 +88,12 @@ Pour plus d'information sur la commande, tapes la commande \`${settings.prefix}h
 
           message.reply(
             `Le message d'inscription a été créé, épinglé et est disponible ici : ${urlEmbedMsg}\nN'oublie pas de t'y inscrire en ajoutant une réaction 😜.`
+          );
+          logAction(
+            client,
+            this.help,
+            `Evènement créé.\nURL : ${urlEmbedMsg}`,
+            message
           );
         }
         botIsWaitingForFeedback = false;

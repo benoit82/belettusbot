@@ -3,20 +3,21 @@ const { TYPE } = require("../config");
 
 module.exports.logAction = (
   client,
-  message,
   { name, typeInfoLog },
-  description
+  description,
+  message = null
 ) => {
   if (client.settings.logChannel) {
     const color = TYPE[typeInfoLog]
       ? TYPE[typeInfoLog].color
       : TYPE.default.color;
+    const user = message ? message.author : client.user;
     const embed = new MessageEmbed()
-      .setAuthor(message.author.username, message.author.avatarURL())
       .setColor(color)
       .setTitle(name)
       .setTimestamp()
-      .setDescription(description);
+      .setDescription(description)
+      .setAuthor(user.username, user.avatarURL());
 
     client.channels.cache.get(client.settings.logChannel).send(embed);
   }
