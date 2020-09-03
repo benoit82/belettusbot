@@ -24,12 +24,7 @@ Pour plus d'information sur la commande, tapes la commande \`${settings.prefix}h
       `L'argument du titre n'est pas entouré des caractères \`"\`, retapes la commande.${helpCmd}`
     );
   const step1args = args.join(" ").split('"').slice(1);
-  if (
-    step1args[1] &&
-    !step1args[1]
-      .trim()
-      .match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png|jpeg)/)
-  )
+  if (step1args[1] && !step1args[1].trim().match(client.config.REGEX.URL_IMG))
     return channel.send(
       `L'argument de l'URL de l'image n'est pas valide, retapes la commande.${helpCmd}`
     );

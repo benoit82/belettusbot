@@ -71,6 +71,16 @@ const MESSAGES = {
         typeInfoLog: TYPE.danger.label,
         category: "event",
       },
+      IMGEVENT: {
+        name: "imgevent",
+        aliases: ["imgevent"],
+        description:
+          "Modifie l'image d'illustration d'un évènement. On peux obtenir l'ID d'un évènement via la commande `myevents`",
+        usage: ["<ID_evenement> <URL_image>"],
+        args: true,
+        typeInfoLog: TYPE.info.label,
+        category: "event",
+      },
     },
     MISC: {
       CLEARLOG: {

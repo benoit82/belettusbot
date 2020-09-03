@@ -25,7 +25,7 @@ exports.saveChannel = async (client, message, args, newSetting) => {
     );
   }
   let res = {};
-  if (newSetting.match(/^([0-9]*)$/)) {
+  if (newSetting.match(client.config.REGEX.MESSAGE_ID)) {
     res = client.channels.cache.get(newSetting);
     if (res) {
       await client.updateGuild(message.guild, { [args[0]]: res.id });

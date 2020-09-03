@@ -4,7 +4,7 @@ module.exports.run = async (client, message, args) => {
   const { settings } = client;
   const getSetting = args[0];
   const newSetting = args.slice(1).join(" ");
-  if (getSetting.match(/(logChannel|eventChannel)/)) {
+  if (getSetting.match(client.config.REGEX.CHANNELS)) {
     await saveChannel(client, message, args, newSetting);
   }
   if (getSetting === "prefix") {

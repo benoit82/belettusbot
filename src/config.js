@@ -14,6 +14,11 @@ module.exports = {
     cancel: "c",
     close: "x",
   },
+  REGEX: {
+    URL_IMG: /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png|jpeg)/,
+    MESSAGE_ID: /^([0-9]*)$/,
+    CHANNELS: /(logChannel|eventChannel)/,
+  },
   URL_IMG_EVENT_DEFAULT:
     "https://www.fffury.com/FF9/Images/Chocobos/Chocobos-1.png",
   DEFAULTSETTINGS: {

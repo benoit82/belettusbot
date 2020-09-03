@@ -7,7 +7,7 @@ module.exports.run = async (client, message, args) => {
   const { settings, channels } = client;
   const helpCmd = `
   Pour plus d'information sur la commande, tapes la commande \`${settings.prefix}help ${this.help.name}\``;
-  if (!args[0].match(/^([0-9]*)$/))
+  if (!args[0].match(client.config.REGEX.MESSAGE_ID))
     return message.reply(`L'ID est mal saisie.${helpCmd}`);
   let eventTarget = await client.getEvent({ messageID: args[0] });
   if (eventTarget) {
