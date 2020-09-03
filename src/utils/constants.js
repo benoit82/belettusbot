@@ -64,7 +64,8 @@ const MESSAGES = {
       CANCELEVENT: {
         name: "cancelevent",
         aliases: ["cancelevent"],
-        description: "Annule un évènement par rapport à son ID.",
+        description:
+          "Annule un évènement par rapport à son ID. On peux obtenir l'ID d'un évènement via la commande `myevents`",
         usage: ["<ID_evenement>"],
         args: true,
         typeInfoLog: TYPE.danger.label,
