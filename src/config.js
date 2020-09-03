@@ -9,6 +9,13 @@ module.exports = {
     default: { color: "#7a7a7a" },
   },
   CD_COMMAND_DEFAULT: 5_000,
+  EVENT_STATUS: {
+    open: "o",
+    cancel: "c",
+    close: "x",
+  },
+  URL_IMG_EVENT_DEFAULT:
+    "https://www.fffury.com/FF9/Images/Chocobos/Chocobos-1.png",
   DEFAULTSETTINGS: {
     prefix: "bb!",
     logChannel: "",

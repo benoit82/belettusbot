@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { EVENT_STATUS } = require("../config");
 
 const eventSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
@@ -16,9 +17,9 @@ const eventSchema = mongoose.Schema({
     type: Number,
     default: () => Math.floor(Date.now() / 1000),
   },
-  isActive: {
-    type: Boolean,
-    default: true,
+  status: {
+    type: String,
+    default: EVENT_STATUS.open,
   },
 });
 
