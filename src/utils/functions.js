@@ -75,14 +75,18 @@ exports.embedCreateFromEvent = (client, message, event) => {
   const me = new MessageEmbed()
     .setAuthor(author.username, author.avatarURL())
     .setColor(
-      event.isActive
+      event.status === client.config.EVENT_STATUS.open
         ? client.config.TYPE.info.color
         : client.config.TYPE.danger.color
     )
     .setTitle(event.title)
     .addField(
       "`Status` : ",
-      event.isActive ? "**INSCRIPTIONS OUVERTES**" : "**ANNULEE**"
+      event.status === client.config.EVENT_STATUS.open
+        ? "**INSCRIPTIONS OUVERTES**"
+        : event.status === client.config.EVENT_STATUS.cancel
+        ? "**EVENEMENT ANNULEE**"
+        : "**EVENEMENT FERMEE**"
     )
     .addField(
       "`Heure du rendez-vous` : ",
@@ -94,12 +98,10 @@ exports.embedCreateFromEvent = (client, message, event) => {
   if (event.image && event.image !== "") {
     me.setImage(event.image);
   } else {
-    me.setThumbnail(
-      "https://www.fffury.com/FF9/Images/Chocobos/Chocobos-1.png"
-    );
+    me.setThumbnail(client.config.URL_IMG_EVENT_DEFAULT);
   }
   if (event.description && event.description !== "")
-    me.setDescription("`Description` : ", event.description);
+    me.setDescription(`\`Description\` :\n${event.description}`);
 
   return me;
 };
