@@ -51,6 +51,25 @@ const MESSAGES = {
         category: "event",
         isUserAdmin: true,
       },
+      MYEVENTS: {
+        name: "myevents",
+        aliases: ["myevents"],
+        description:
+          "Affiche les différents évènement créer par l'utilisateur, afin de pouvoir annuler un évènement.",
+        usage: [""],
+        args: false,
+        typeInfoLog: TYPE.info.label,
+        category: "event",
+      },
+      CANCELEVENT: {
+        name: "cancelevent",
+        aliases: ["cancelevent"],
+        description: "Annule un évènement par rapport à son ID.",
+        usage: ["<ID_evenement>"],
+        args: true,
+        typeInfoLog: TYPE.danger.label,
+        category: "event",
+      },
     },
     MISC: {
       CLEARLOG: {

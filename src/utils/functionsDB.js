@@ -65,6 +65,13 @@ module.exports = async (client) => {
     if (data) return data;
     return;
   };
+  client.getEventByCreator = async (user) => {
+    const datas = await Event.find({
+      creator: user.id,
+      status: { $ne: client.config.EVENT_STATUS.close },
+    });
+    return datas ? datas : null;
+  };
 
   client.removeOldEvents = async (guild, message = null) => {
     const { channels, settings } = client;
