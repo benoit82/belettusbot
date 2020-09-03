@@ -10,14 +10,13 @@ module.exports.run = async (client, message, args) => {
   if (getSetting === "prefix") {
     if (newSetting) {
       await client.updateGuild(message.guild, { prefix: newSetting });
+      client.settings = await client.getGuild(message.guild);
       return message.channel.send(
         `Prefix mis à jour: \`${settings.prefix}\` => \`${newSetting}\``
       );
     }
     message.channel.send("`" + settings.prefix + "`");
   }
-  // settings update
-  client.settings = await client.getGuild(message.guild);
 };
 
 module.exports.help = MESSAGES.COMMANDS.ADMIN.CONFIG;

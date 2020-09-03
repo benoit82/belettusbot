@@ -49,6 +49,7 @@ exports.saveChannel = async (client, message, args, newSetting) => {
       return;
     }
   }
+  client.settings = await client.getGuild(message.guild);
   return message.channel.send(
     `${args[0]} mis à jour du salon : \`#${
       client.channels.cache.get(settings[args[0]]).name
