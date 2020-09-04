@@ -25,7 +25,7 @@ exports.saveChannel = async (client, message, args, newSetting) => {
     );
   }
   let res = {};
-  if (newSetting.match(client.config.REGEX.MESSAGE_ID)) {
+  if (newSetting.match(client.config.REGEX.DISCORD_ID_FORMAT)) {
     res = client.channels.cache.get(newSetting);
     if (res) {
       await client.updateGuild(message.guild, { [args[0]]: res.id });
@@ -58,22 +58,10 @@ exports.saveChannel = async (client, message, args, newSetting) => {
 };
 
 exports.embedCreateFromEvent = (client, message, event) => {
-  const playerFieldSeparator = ", ";
   const author = message.channel.members.find(
     (member) => member.id === event.creator
   ).user;
-  let players = "";
-  let setPlayers = new Set(event.players);
-  setPlayers.forEach((pID) => {
-    players +=
-      message.channel.guild.members.cache.find(
-        (member) => member.user.id === pID
-      ).user.username + playerFieldSeparator;
-  });
-  players =
-    players.length > 0
-      ? players.substr(0, players.length - playerFieldSeparator.length)
-      : "Aucun inscrit";
+
   const me = new MessageEmbed()
     .setAuthor(author.username, author.avatarURL())
     .setColor(
@@ -94,7 +82,6 @@ exports.embedCreateFromEvent = (client, message, event) => {
       "`Heure du rendez-vous` : ",
       `**${moment(event.rdv).format("LLLL")}**`
     )
-    .addField("`Joueurs` : ", `**${players}**`)
     .setTimestamp();
 
   if (event.image && event.image !== "") {
@@ -105,5 +92,67 @@ exports.embedCreateFromEvent = (client, message, event) => {
   if (event.description && event.description !== "")
     me.setDescription(`\`Description\` :\n${event.description}`);
 
+  // players display
+  let obj = {};
+  let divers = [];
+  if (event.players && event.players.length > 0) {
+    event.players.forEach((player) => {
+      //if the tag is in a job list category, we add the player to the category
+      let findCat = false;
+      Object.entries(client.config.JOB_LIST).forEach((role) => {
+        role[1].forEach((job) => {
+          if (job === player[1]) {
+            const cat = role[0];
+            if (!obj[cat]) obj[cat] = [];
+            player = [...player];
+            obj[cat] = [...obj[cat], player];
+            findCat = true;
+          }
+        });
+      });
+      if (!findCat) divers = [...divers, player];
+    });
+
+    if (divers.length > 0) obj = { ...obj, divers };
+
+    Object.entries(obj)
+      .sort((cat1, cat2) => {
+        return cat1[0] > cat2[0] ? 1 : -1;
+      })
+      .forEach((category) => {
+        let playersStringBuilder = "";
+        category[1].forEach((player) => {
+          const emojiBuilder =
+            player[1] && player[1].match(client.config.REGEX.DISCORD_ID_FORMAT)
+              ? client.emojis.cache.get(player[1]).toString()
+              : "✅";
+          playersStringBuilder += emojiBuilder + " <@" + player[0] + ">\n";
+        });
+        // finally we add fieds
+        me.addField(
+          category[0] + " (" + category[1].length + ")",
+          playersStringBuilder,
+          true
+        );
+      });
+  } else {
+    me.addField("Actuellement...", "Aucun joueur inscrit.");
+  }
+
   return me;
+};
+
+exports.emojiReactionCheck = (emoji_list, emojiID) => {
+  let tabAvailableEmojiID = [];
+  Object.entries(emoji_list).forEach((role) => {
+    Object.entries(role).forEach((job) => {
+      if (job[0] === "1")
+        tabAvailableEmojiID = [...tabAvailableEmojiID, Object.values(job[1])];
+    });
+  });
+  tabAvailableEmojiID = tabAvailableEmojiID.flat();
+  // TODO : si la condition dans le log est vrai, alors c'est un emoji de role sinon => category autre,
+  // si l'user a déjà réagi, on efface sa nouvelle reaction, il devra annuler sa reaction precedente pour mettre un nouveau
+  emoji_list.includes(emojiID);
+  return ["role", "emoji"];
 };

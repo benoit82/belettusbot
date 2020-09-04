@@ -8,20 +8,14 @@ module.exports = async (client, messageReaction, user) => {
   // retrieving the event
   let eventTarget = await client.getEvent({ messageID: message.id });
   if (eventTarget) {
-    if (messageReaction.partial) {
-      try {
-        await messageReaction.fetch();
-      } catch (error) {
-        console.log(`probleme partial : ${error.message}`);
-      }
-    }
+    if (messageReaction.partial) await messageReaction.fetch();
+
     if (
       eventTarget.status === client.config.EVENT_STATUS.open &&
       moment(eventTarget.rdv).isAfter(Date.now())
     ) {
       let players = [...eventTarget.players];
-      const i = players.findIndex((el) => el === user.id);
-      players = players.filter((u, index) => index !== i);
+      players = players.filter((player) => player[0] !== user.id);
       eventTarget = await client.updateEvent(eventTarget, { players });
       const embed = embedCreateFromEvent(client, message, eventTarget);
       // update the event message

@@ -9,7 +9,7 @@ module.exports.run = async (client, message, args) => {
     return message.reply(`L'URL de l'image n'a pas été saisie.${helpCmd}`);
   if (!args[1].match(client.config.REGEX.URL_IMG))
     return message.reply(`L'URL de l'image est mal saisie.${helpCmd}`);
-  if (!args[0].match(client.config.REGEX.MESSAGE_ID))
+  if (!args[0].match(client.config.REGEX.DISCORD_ID_FORMAT))
     return message.reply(`L'ID est mal saisie.${helpCmd}`);
   let eventTarget = await client.getEvent({ messageID: args[0] });
   if (eventTarget) {

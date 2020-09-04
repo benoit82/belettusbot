@@ -11,13 +11,15 @@ module.exports.logAction = (
     const color = TYPE[typeInfoLog]
       ? TYPE[typeInfoLog].color
       : TYPE.default.color;
-    const user = message ? message.author : client.user;
     const embed = new MessageEmbed()
       .setColor(color)
       .setTitle(name)
       .setTimestamp()
-      .setDescription(description)
-      .setAuthor(user.username, user.avatarURL());
+      .setDescription(description);
+
+    if (message) {
+      embed.setAuthor(message.author.username, message.author.avatarURL());
+    }
 
     client.channels.cache.get(client.settings.logChannel).send(embed);
   }
