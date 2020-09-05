@@ -107,7 +107,7 @@ const MESSAGES = {
         description: "liste les commandes du bot",
         args: false,
         category: "misc",
-        cooldown: 1_000,
+        cooldown: 1000,
         usage: ["<command_name>"],
         isUserAdmin: false,
       },

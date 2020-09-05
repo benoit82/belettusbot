@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { Client, Collection } = require("discord.js");
 const {
   loadCommands,
@@ -17,4 +18,4 @@ loadMongoose(client);
 loadGuildInfo(client);
 
 // log the bot
-client.login(client.config.DISCORD_BOT_TOKEN);
+client.login(process.env.DISCORD_BOT_TOKEN);

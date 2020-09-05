@@ -50,7 +50,7 @@ module.exports.run = async (client, message, args) => {
         return user.id === user.id;
       };
       const msgReactCollector = msg.createReactionCollector(filter, {
-        idle: 30_000,
+        idle: 30000,
       });
       msgReactCollector.on("collect", (reaction) => {
         let reac = reaction.emoji.id
@@ -71,7 +71,7 @@ module.exports.run = async (client, message, args) => {
           .then((msg) => {
             setTimeout(() => {
               msg.delete();
-            }, 3_000);
+            }, 3000);
           });
       });
     });

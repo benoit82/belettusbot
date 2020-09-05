@@ -43,7 +43,7 @@ Pour plus d'information sur la commande, tapes la commande \`${settings.prefix}h
   const collector = new MessageCollector(
     channel,
     (m) => m.author.id === message.author.id,
-    { time: 120_000 } // 2mn
+    { time: 120000 } // 2mn
   );
   let botIsWaitingForFeedback = true;
   collector.on("collect", async (creatorMsg) => {

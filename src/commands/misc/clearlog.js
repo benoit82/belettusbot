@@ -5,7 +5,7 @@ const { logAction } = require("../../utils/botlog");
 module.exports.run = async (client, message, args) => {
   const { PREFIX, TYPE } = client.config;
   if (args[0] === "all") {
-    const time = 5_000;
+    const time = 5000;
     const collector = new MessageCollector(
       message.channel,
       (m) => m.author.id === message.author.id,
