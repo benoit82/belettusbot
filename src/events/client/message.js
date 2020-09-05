@@ -58,7 +58,7 @@ module.exports = async (client, message) => {
   if (tStamps.has(message.author.id)) {
     const cdExpirationTime = tStamps.get(message.author.id) + cdAmount;
     if (timeNow < cdExpirationTime) {
-      const timeLeft = (cdExpirationTime - timeNow) / 1_000;
+      const timeLeft = (cdExpirationTime - timeNow) / 1000;
       return message.reply(
         `merci d'attendre ${timeLeft.toFixed(
           0
