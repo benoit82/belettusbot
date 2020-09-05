@@ -20,6 +20,7 @@ module.exports = {
     CHANNELS: /(logChannel|eventChannel)/,
   },
   RDV_FORMAT: "JJMMAAAA HH mm",
+  LIST_ROLE: ["Tanks", "Healers", "DPS", "Flex"],
   JOB_LIST: {
     TANK: [
       "750772954949746761", // a retirer

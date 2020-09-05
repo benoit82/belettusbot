@@ -50,11 +50,13 @@ exports.saveChannel = async (client, message, args, newSetting) => {
     }
   }
   client.settings = await client.getGuild(message.guild);
-  return message.channel.send(
-    `${args[0]} mis à jour du salon : \`#${
-      client.channels.cache.get(settings[args[0]]).name
-    }\` => \`#${res.name}\``
-  );
+  const chanName = client.channels.cache.get(settings[args[0]]).name;
+  if (chanName) {
+    message.channel.send(
+      `${args[0]} mis à jour du salon : \`#${chanName}\` => \`#${res.name}\``
+    );
+  }
+  return;
 };
 
 exports.embedCreateFromEvent = (client, message, event) => {
@@ -140,19 +142,4 @@ exports.embedCreateFromEvent = (client, message, event) => {
   }
 
   return me;
-};
-
-exports.emojiReactionCheck = (emoji_list, emojiID) => {
-  let tabAvailableEmojiID = [];
-  Object.entries(emoji_list).forEach((role) => {
-    Object.entries(role).forEach((job) => {
-      if (job[0] === "1")
-        tabAvailableEmojiID = [...tabAvailableEmojiID, Object.values(job[1])];
-    });
-  });
-  tabAvailableEmojiID = tabAvailableEmojiID.flat();
-  // TODO : si la condition dans le log est vrai, alors c'est un emoji de role sinon => category autre,
-  // si l'user a déjà réagi, on efface sa nouvelle reaction, il devra annuler sa reaction precedente pour mettre un nouveau
-  emoji_list.includes(emojiID);
-  return ["role", "emoji"];
 };

@@ -32,15 +32,10 @@ module.exports = async (client) => {
     for (const key in settings) {
       if (data[key] !== settings[key]) data[key] = settings[key];
     }
-    return data.updateOne(settings);
+    await data.updateOne(settings);
+    return await await client.getGuild(guild);
   };
 
-  /**
-   *
-   * @param {Event} event
-   * @param {Channel} channel
-   * @return Boolean true if event record is OK, false if error has been catched
-   */
   client.createEvent = async (event, channel) => {
     const merged = Object.assign({ _id: mongoose.Types.ObjectId() }, event);
     const createEvt = await new Event(merged);

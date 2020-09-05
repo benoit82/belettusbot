@@ -12,6 +12,8 @@ const MESSAGES = {
           "logChannel <id_du_salon | nom_du_salon (sans le #)>",
           "eventChannel <id_du_salon | nom_du_salon (sans le #)>",
           "prefix <valeur>",
+          "react",
+          "react reset",
         ],
         typeInfoLog: TYPE.info.label,
         category: "admin",
@@ -32,7 +34,7 @@ const MESSAGES = {
     EVENT: {
       ADDEVENT: {
         name: "addevent",
-        aliases: ["addevent"],
+        aliases: ["addevent", "ae"],
         description:
           "Ajoute un évènement pour la communauté, FFXIV ou autres... Même les soirées barbec'!",
         usage: ['"<titre>"', '"<titre>" <url illustration>'],
@@ -42,7 +44,7 @@ const MESSAGES = {
       },
       CLEAREVENTS: {
         name: "clearevents",
-        aliases: ["clearevents"],
+        aliases: ["clearevents", "xe"],
         description:
           "Purge la base de donnée des évents du serveur discord qui sont dépassé.",
         usage: [""],
@@ -53,7 +55,7 @@ const MESSAGES = {
       },
       MYEVENTS: {
         name: "myevents",
-        aliases: ["myevents"],
+        aliases: ["myevents", "me"],
         description:
           "Affiche les différents évènement créer par l'utilisateur, afin de pouvoir annuler un évènement.",
         usage: [""],
@@ -63,7 +65,7 @@ const MESSAGES = {
       },
       CANCELEVENT: {
         name: "cancelevent",
-        aliases: ["cancelevent"],
+        aliases: ["cancelevent", "ce"],
         description:
           "Annule un évènement par rapport à son ID. On peux obtenir l'ID d'un évènement via la commande `myevents`",
         usage: ["<ID_evenement>"],
@@ -73,7 +75,7 @@ const MESSAGES = {
       },
       IMGEVENT: {
         name: "imgevent",
-        aliases: ["imgevent"],
+        aliases: ["imgevent", "ie"],
         description:
           "Modifie l'image d'illustration d'un évènement. On peux obtenir l'ID d'un évènement via la commande `myevents`",
         usage: ["<ID_evenement> <URL_image>"],

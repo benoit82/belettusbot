@@ -17,6 +17,12 @@ const guildSchema = mongoose.Schema({
     type: String,
     default: defaults.prefix,
   },
+  reactRoles: {
+    Tanks: { type: Array, default: [] },
+    Healers: { type: Array, default: [] },
+    DPS: { type: Array, default: [] },
+    Flex: { type: Array, default: [] },
+  },
 });
 
 module.exports = mongoose.model("Guild", guildSchema);

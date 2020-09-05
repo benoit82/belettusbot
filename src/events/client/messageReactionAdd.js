@@ -2,15 +2,17 @@ const { embedCreateFromEvent } = require("../../utils/functions");
 const moment = require("moment");
 
 module.exports = async (client, messageReaction, user) => {
+  if (messageReaction.partial) await messageReaction.fetch();
   const { message } = messageReaction;
   if (!client.settings) client.settings = await client.getGuild(message.guild);
+
+  // event case
   if (!message.channel.id === client.settings.eventChannel) return;
 
   // retrieving the event
   let eventTarget = await client.getEvent({ messageID: message.id });
 
   if (eventTarget) {
-    if (messageReaction.partial) await messageReaction.fetch();
     if (
       eventTarget.status === client.config.EVENT_STATUS.open &&
       moment(eventTarget.rdv).isAfter(moment())
