@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { Collection } = require("discord.js");
 const { CD_COMMAND_DEFAULT } = require("../../config");
 
@@ -19,8 +20,18 @@ module.exports = async (client, message) => {
     );
   if (!command) return;
 
+  // check user restriction
+  if (
+    command.help.isUserAdmin &&
+    (!message.member.hasPermission("ADMINISTRATOR") ||
+      message.member.id !== process.env.CREATOR_ID)
+  )
+    return message.channel.send(
+      "Un rang `Administrateur` est nécéssaire pour utiliser cette commande."
+    );
+
   // check if event channel has been configure for eventCmd
-  if (settings.eventChannel === "" && commandName.match(/(addevent)/))
+  if (settings.eventChannel === "" && commandName.match(/(addevent|ae)/))
     return message.channel.send(
       "Il faut configurer le salon d'annonce des évènements en premier lieu, par la commande `config`.\nIl faut les droit administrateur du serveur pour l'utiliser.\nConsulte la commande `help` pour plus d'information."
     );

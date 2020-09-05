@@ -11,6 +11,11 @@ module.exports.run = async (client, message, args) => {
     return message.reply(`L'ID est mal saisie.${helpCmd}`);
   let eventTarget = await client.getEvent({ messageID: args[0] });
   if (eventTarget) {
+    //check if the user is the author or an admin or bot creator
+    if (message.member.id !== eventTarget.creator) {
+      return message.reply("Tu n'as pas les droits pour modifier cet évent.");
+    }
+
     eventTarget = await client.updateEvent(eventTarget, {
       status: client.config.EVENT_STATUS.cancel,
     });
@@ -21,16 +26,16 @@ module.exports.run = async (client, message, args) => {
     if (originalMsg.pinned) originalMsg.unpin();
     message.reply(`Evènement \`${eventTarget.messageID}\` annulé.`);
     // warn all players registered => event is now canceled
-    let players = new Set(eventTarget.players);
-    if (players.size > 0) {
-      players.delete(message.author.id);
-      if (players.size > 0) {
+    let { players } = eventTarget;
+    if (players.length > 0) {
+      players = players.filter((player) => player.id !== message.author.id);
+      if (players.length > 0) {
         message.channel.send(
           "Je préviens les autres inscrits de son annulation.😗"
         );
         players.forEach((player) => {
           client.users.cache
-            .get(player)
+            .get(player.id)
             .send(
               `L'évènement **${eventTarget.title}** prévu pour le **${moment(
                 eventTarget.rdv

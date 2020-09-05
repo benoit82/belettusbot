@@ -13,6 +13,12 @@ module.exports.run = async (client, message, args) => {
     return message.reply(`L'ID est mal saisie.${helpCmd}`);
   let eventTarget = await client.getEvent({ messageID: args[0] });
   if (eventTarget) {
+    //check if the user is the author or an admin or bot creator
+
+    if (message.member.id !== eventTarget.creator) {
+      return message.reply("Tu n'as pas les droits pour modifier cet évent.");
+    }
+
     eventTarget = await client.updateEvent(eventTarget, {
       image: args[1],
     });
