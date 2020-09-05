@@ -20,17 +20,6 @@ const MESSAGES = {
         category: "admin",
         isUserAdmin: true,
       },
-      EVAL: {
-        name: "eval",
-        aliases: ["eval"],
-        description: "Renvoie un code javascript testé",
-        cooldown: 3_000,
-        usage: ["<code_to_test>"],
-        args: true,
-        typeInfoLog: TYPE.info.label,
-        category: "admin",
-        isUserAdmin: true,
-      },
     },
     EVENT: {
       ADDEVENT: {
@@ -41,6 +30,7 @@ const MESSAGES = {
         usage: ['"<titre>"', '"<titre>" <url illustration>'],
         args: true,
         typeInfoLog: TYPE.info.label,
+        isUserAdmin: false,
         category: "event",
       },
       CLEAREVENTS: {
@@ -62,6 +52,7 @@ const MESSAGES = {
         usage: [""],
         args: false,
         typeInfoLog: TYPE.info.label,
+        isUserAdmin: false,
         category: "event",
       },
       CANCELEVENT: {
@@ -72,6 +63,7 @@ const MESSAGES = {
         usage: ["<ID_evenement>"],
         args: true,
         typeInfoLog: TYPE.danger.label,
+        isUserAdmin: false,
         category: "event",
       },
       IMGEVENT: {
@@ -81,6 +73,7 @@ const MESSAGES = {
           "Modifie l'image d'illustration d'un évènement. On peux obtenir l'ID d'un évènement via la commande `myevents`",
         usage: ["<ID_evenement> <URL_image>"],
         args: true,
+        isUserAdmin: false,
         typeInfoLog: TYPE.info.label,
         category: "event",
       },
@@ -94,6 +87,7 @@ const MESSAGES = {
         args: false,
         usage: ["", "all"],
         typeInfoLog: TYPE.warning.label,
+        isUserAdmin: true,
         category: "misc",
       },
       HELP: {
@@ -104,6 +98,7 @@ const MESSAGES = {
         category: "misc",
         cooldown: 1_000,
         usage: ["<command_name>"],
+        isUserAdmin: false,
       },
       TEST: {
         name: "test",
@@ -113,6 +108,7 @@ const MESSAGES = {
         usage: [`<${RDV_FORMAT}>`],
         cooldown: 100,
         category: "misc",
+        isUserAdmin: false,
       },
     },
   },
