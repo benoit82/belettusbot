@@ -77,8 +77,8 @@ exports.embedCreateFromEvent = (client, message, event) => {
       event.status === client.config.EVENT_STATUS.open
         ? "**INSCRIPTIONS OUVERTES**"
         : event.status === client.config.EVENT_STATUS.cancel
-        ? "**EVENEMENT ANNULEE**"
-        : "**EVENEMENT FERMEE**"
+        ? "**EVENEMENT ANNULE**"
+        : "**EVENEMENT FERME**"
     )
     .addField(
       "`Heure du rendez-vous` : ",
