@@ -41,7 +41,7 @@ module.exports.run = async (client, message, args) => {
         return user.id === user.id;
       };
       const msgReactCollector = msg.createReactionCollector(filter, {
-        idle: 90_000,
+        idle: 30_000,
       });
       msgReactCollector.on("collect", (reaction) => {
         let reac = reaction.emoji.id
