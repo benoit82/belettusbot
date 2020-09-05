@@ -14,6 +14,7 @@ const MESSAGES = {
           "prefix <valeur>",
           "react",
           "react reset",
+          "react reset <Tanks | Healers | DPS | Flex>",
         ],
         typeInfoLog: TYPE.info.label,
         category: "admin",

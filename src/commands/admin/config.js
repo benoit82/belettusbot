@@ -19,13 +19,22 @@ module.exports.run = async (client, message, args) => {
   }
   if (getSetting === "react") {
     if (args[1] && args[1] === "reset") {
-      client.config.LIST_ROLE.forEach(async (role) => {
-        client.settings.reactRoles[role] = [];
-      });
+      const isRoleInputed =
+        args[2] && client.config.LIST_ROLE.includes(args[2]);
+      if (isRoleInputed) {
+        client.settings.reactRoles[args[2]] = [];
+      } else {
+        client.config.LIST_ROLE.forEach(async (role) => {
+          client.settings.reactRoles[role] = [];
+        });
+      }
       client.updateGuild(message.guild, {
         reactRoles: client.settings.reactRoles,
       });
-      message.channel.send("Les réactions de rôles ont été éffacé.");
+      const confMsg = isRoleInputed
+        ? `Les réactions du rôle \`${args[2]}\` ont été éffacé.`
+        : "Les réactions de rôles ont été éffacé.";
+      message.channel.send(confMsg);
       return;
     }
     client.config.LIST_ROLE.forEach(async (role) => {
@@ -51,13 +60,7 @@ module.exports.run = async (client, message, args) => {
           client.settings.reactRoles[role].push(reac);
         }
       });
-      msgReactCollector.on("remove", (reaction) => {
-        let reac = reaction.emoji.id
-          ? reaction.emoji.id
-          : reaction.emoji.toString();
-        client.settings.reactRoles[role].filter((emoji) => emoji !== reac);
-        console.log("- " + reaction);
-      });
+
       msgReactCollector.on("end", async () => {
         await client.updateGuild(message.guild, {
           reactRoles: client.settings.reactRoles,
