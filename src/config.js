@@ -1,7 +1,5 @@
-require("dotenv").config();
-
 module.exports = {
-  DBCONNECTION: `mongodb+srv://${process.env.MONGODB_ATLAS_USER}:${process.env.MONGODB_ATLAS_PWD}@bbotdb.xhqrs.mongodb.net/belettusDB`,
+  DBCONNECTION: `mongodb+srv://belettusbot:BV6kEVYSnAHGeCkj@bbotdb.xhqrs.mongodb.net/belettusDB`,
   TYPE: {
     info: { label: "info", color: "#00d921" },
     warning: { label: "warning", color: "#d5d900" },
@@ -28,4 +26,8 @@ module.exports = {
     logChannel: "",
     eventChannel: "",
   },
+  CREATOR_ID: "71723455359229952",
+  DISCORD_BOT_CLIENT_ID: "748585400083152966",
+  DISCORD_BOT_TOKEN:
+    "NzQ4NTg1NDAwMDgzMTUyOTY2.X0fkew.4XTA7HZ6Zv1hdOmH04-BT3Ylb-U",
 };

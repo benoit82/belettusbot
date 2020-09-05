@@ -1,4 +1,3 @@
-require("dotenv").config();
 const { Collection } = require("discord.js");
 const { CD_COMMAND_DEFAULT } = require("../../config");
 
@@ -24,7 +23,7 @@ module.exports = async (client, message) => {
   if (
     command.help.isUserAdmin &&
     (!message.member.hasPermission("ADMINISTRATOR") ||
-      message.member.id !== process.env.CREATOR_ID)
+      message.member.id !== client.config.CREATOR_ID)
   )
     return message.channel.send(
       "Un rang `Administrateur` est nécéssaire pour utiliser cette commande."

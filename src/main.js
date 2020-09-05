@@ -5,7 +5,6 @@ const {
   loadMongoose,
   loadGuildInfo,
 } = require("./utils/loader");
-require("dotenv").config();
 
 const client = new Client({ partials: ["MESSAGE", "CHANNEL", "REACTION"] });
 client.config = require("./config");
@@ -18,4 +17,4 @@ loadMongoose(client);
 loadGuildInfo(client);
 
 // log the bot
-client.login(process.env.DISCORD_BOT_TOKEN);
+client.login(client.config.DISCORD_BOT_TOKEN);
