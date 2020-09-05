@@ -9,7 +9,5 @@ module.exports = async (client, guild) => {
       guildID: guild.id,
       guildName: guild.name,
     });
-  } else {
-    console.log("serveur existant");
   }
 };
