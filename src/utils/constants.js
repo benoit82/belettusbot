@@ -1,4 +1,4 @@
-const { TYPE } = require("../config");
+const { TYPE, RDV_FORMAT } = require("../config");
 
 const MESSAGES = {
   COMMANDS: {
@@ -107,7 +107,7 @@ const MESSAGES = {
         aliases: ["test"],
         description: "Test validation de date.",
         args: false,
-        usage: ["<JJMMAAAA HH mm>"],
+        usage: [`<${RDV_FORMAT}>`],
         cooldown: 100,
         category: "misc",
       },

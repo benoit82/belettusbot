@@ -19,6 +19,7 @@ module.exports = {
     DISCORD_ID_FORMAT: /^([0-9]*)$/,
     CHANNELS: /(logChannel|eventChannel)/,
   },
+  RDV_FORMAT: "JJMMAAAA HH mm",
   JOB_LIST: {
     TANK: [
       "750772954949746761", // a retirer

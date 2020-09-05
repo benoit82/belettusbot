@@ -14,7 +14,11 @@ module.exports.run = (client, message, args) => {
   const helpCmd = `
 Pour plus d'information sur la commande, tapes la commande \`${settings.prefix}help ${this.help.name}\``;
   const nowFormat = getFormatFromDate(new Date());
-  const dateFormatShowExample = `Merci de respecter ce format de saisie :\n-***\`JJMMAAAA HH mm (<description de l'évènement>) optionnel\`***\n  Exemple : \`${nowFormat}\` pour le \`${moment(
+  const dateFormatShowExample = `Merci de respecter ce format de saisie :\n-***\`${
+    client.config.RDV_FORMAT
+  } (<description de l'évènement>) optionnel\`***\n-***\`${
+    client.config.RDV_FORMAT
+  } <description de l'évènement>\`***\n  Exemple : \`${nowFormat}\` pour le \`${moment(
     nowFormat,
     "DDMMYYYY HH mm"
   ).format("LLLL")}\` \n-***\`stop\`*** pour ***annuler la commande***`;
