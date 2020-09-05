@@ -16,7 +16,7 @@ Pour plus d'information sur la commande, tapes la commande \`${settings.prefix}h
   const nowFormat = getFormatFromDate(new Date());
   const dateFormatShowExample = `Merci de respecter ce format de saisie :\n-***\`${
     client.config.RDV_FORMAT
-  } (<description de l'évènement>) optionnel\`***\n-***\`${
+  }\`***\n-***\`${
     client.config.RDV_FORMAT
   } <description de l'évènement>\`***\n  Exemple : \`${nowFormat}\` pour le \`${moment(
     nowFormat,
