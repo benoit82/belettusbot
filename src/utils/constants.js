@@ -33,6 +33,17 @@ const MESSAGES = {
         isUserAdmin: false,
         category: "event",
       },
+      CANCELEVENT: {
+        name: "cancelevent",
+        aliases: ["cancelevent", "ce"],
+        description:
+          "Annule un évènement par rapport à son ID. On peux obtenir l'ID d'un évènement via la commande `myevents`",
+        usage: ["<ID_evenement>"],
+        args: true,
+        typeInfoLog: TYPE.danger.label,
+        isUserAdmin: false,
+        category: "event",
+      },
       CLEAREVENTS: {
         name: "clearevents",
         aliases: ["clearevents", "xe"],
@@ -43,6 +54,17 @@ const MESSAGES = {
         typeInfoLog: TYPE.danger.label,
         category: "event",
         isUserAdmin: true,
+      },
+      IMGEVENT: {
+        name: "imgevent",
+        aliases: ["imgevent", "ie"],
+        description:
+          "Modifie l'image d'illustration d'un évènement. On peux obtenir l'ID d'un évènement via la commande `myevents`",
+        usage: ["<ID_evenement> <URL_image>"],
+        args: true,
+        isUserAdmin: false,
+        typeInfoLog: TYPE.info.label,
+        category: "event",
       },
       MYEVENTS: {
         name: "myevents",
@@ -55,26 +77,15 @@ const MESSAGES = {
         isUserAdmin: false,
         category: "event",
       },
-      CANCELEVENT: {
-        name: "cancelevent",
-        aliases: ["cancelevent", "ce"],
+      NEXTEVENTS: {
+        name: "nextevents",
+        aliases: ["nextevents", "next", "ne"],
         description:
-          "Annule un évènement par rapport à son ID. On peux obtenir l'ID d'un évènement via la commande `myevents`",
-        usage: ["<ID_evenement>"],
-        args: true,
-        typeInfoLog: TYPE.danger.label,
-        isUserAdmin: false,
-        category: "event",
-      },
-      IMGEVENT: {
-        name: "imgevent",
-        aliases: ["imgevent", "ie"],
-        description:
-          "Modifie l'image d'illustration d'un évènement. On peux obtenir l'ID d'un évènement via la commande `myevents`",
-        usage: ["<ID_evenement> <URL_image>"],
-        args: true,
-        isUserAdmin: false,
+          "Affiche une liste des prochains évènements encore prévu avec le lien pour s'inscrire/désinscrire. Par défault, la liste affiche les évènements sur les 7 prochains jours",
+        usage: ["", "<nombre de jours>"],
+        args: false,
         typeInfoLog: TYPE.info.label,
+        isUserAdmin: false,
         category: "event",
       },
     },

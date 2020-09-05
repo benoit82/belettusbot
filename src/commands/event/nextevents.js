@@ -3,23 +3,20 @@ const moment = require("moment");
 moment.locale("fr");
 
 module.exports.run = async (client, message, args) => {
-  let events = await client.getEventByCreator(message.author);
-  if (events) {
+  if (args[0] && parseInt(args[0]) === NaN)
+    return message.reply("Argument incorrect. Cela doit être un chiffre");
+  const days = args[0] ? parseInt(args[0]) : 7;
+  let events = await client.getNextEvents(days);
+  if (events && events.length > 0) {
     events = events.sort((e1, e2) => {
       return e1.rdv > e2.rdv ? 1 : -1;
     });
     events.forEach((evt) => {
-      const status =
-        evt.status === client.config.EVENT_STATUS.open ? "Actif" : "Annulé";
       message.channel.send(
-        "ID : `" +
-          evt.messageID +
-          "` - Titre : **" +
+        "Titre : **" +
           evt.title +
           "** - Date : **" +
           moment(evt.rdv).format("LLLL") +
-          "**\nStatus : **" +
-          status +
           "** - Inscrits : **" +
           evt.players.length +
           "** - Lien message : " +
@@ -27,8 +24,10 @@ module.exports.run = async (client, message, args) => {
       );
     });
   } else {
-    message.reply("Tu n'as pas d'évènement créé en cours.");
+    message.reply(
+      `Il n'y a pas d'évènement prévu pour les ${days} jours à venir.`
+    );
   }
 };
 
-module.exports.help = MESSAGES.COMMANDS.EVENT.MYEVENTS;
+module.exports.help = MESSAGES.COMMANDS.EVENT.NEXTEVENTS;

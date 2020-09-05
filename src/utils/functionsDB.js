@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const { Guild, Event } = require("../models");
 const moment = require("moment");
-const guild = require("../models/guild");
 const { logAction } = require("./botlog");
 const { embedCreateFromEvent } = require("./functions");
 moment.locale("fr");
@@ -64,6 +63,14 @@ module.exports = async (client) => {
     const datas = await Event.find({
       creator: user.id,
       status: { $ne: client.config.EVENT_STATUS.close },
+    });
+    return datas ? datas : null;
+  };
+
+  client.getNextEvents = async (days) => {
+    const datas = await Event.find({
+      status: client.config.EVENT_STATUS.open,
+      rdv: { $gte: moment(), $lte: moment().add(days, "days") },
     });
     return datas ? datas : null;
   };
