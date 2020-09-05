@@ -16,9 +16,12 @@ module.exports = async (client, messageReaction, user) => {
       moment(eventTarget.rdv).isAfter(moment())
     ) {
       eventTarget.players = eventTarget.players.filter(
-        (player) => player[0] !== user.id
+        (player) => player.id !== user.id
       );
-      players = [...eventTarget.players, [user.id, messageReaction.emoji.id]];
+      const reactEmoji = messageReaction.emoji.id
+        ? messageReaction.emoji.id
+        : "✅";
+      players = [...eventTarget.players, { id: user.id, reactEmoji }];
       // update eventTarget variable
       eventTarget = await client.updateEvent(eventTarget, { players });
       const embed = embedCreateFromEvent(client, message, eventTarget);

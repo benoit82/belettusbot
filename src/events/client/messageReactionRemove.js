@@ -15,7 +15,7 @@ module.exports = async (client, messageReaction, user) => {
       moment(eventTarget.rdv).isAfter(Date.now())
     ) {
       let players = [...eventTarget.players];
-      players = players.filter((player) => player[0] !== user.id);
+      players = eventTarget.players.filter((player) => player.id !== user.id);
       eventTarget = await client.updateEvent(eventTarget, { players });
       const embed = embedCreateFromEvent(client, message, eventTarget);
       // update the event message

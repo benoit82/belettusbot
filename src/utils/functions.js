@@ -101,10 +101,9 @@ exports.embedCreateFromEvent = (client, message, event) => {
       let findCat = false;
       Object.entries(client.config.JOB_LIST).forEach((role) => {
         role[1].forEach((job) => {
-          if (job === player[1]) {
+          if (job === player.reactEmoji) {
             const cat = role[0];
             if (!obj[cat]) obj[cat] = [];
-            player = [...player];
             obj[cat] = [...obj[cat], player];
             findCat = true;
           }
@@ -122,11 +121,12 @@ exports.embedCreateFromEvent = (client, message, event) => {
       .forEach((category) => {
         let playersStringBuilder = "";
         category[1].forEach((player) => {
-          const emojiBuilder =
-            player[1] && player[1].match(client.config.REGEX.DISCORD_ID_FORMAT)
-              ? client.emojis.cache.get(player[1]).toString()
-              : "✅";
-          playersStringBuilder += emojiBuilder + " <@" + player[0] + ">\n";
+          const emojiBuilder = player.reactEmoji.match(
+            client.config.REGEX.DISCORD_ID_FORMAT
+          )
+            ? client.emojis.cache.get(player.reactEmoji).toString()
+            : player.reactEmoji;
+          playersStringBuilder += emojiBuilder + " <@" + player.id + ">\n";
         });
         // finally we add fieds
         me.addField(
