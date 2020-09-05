@@ -101,15 +101,17 @@ exports.embedCreateFromEvent = (client, message, event) => {
     event.players.forEach((player) => {
       //if the tag is in a job list category, we add the player to the category
       let findCat = false;
-      Object.entries(client.config.JOB_LIST).forEach((role) => {
-        role[1].forEach((job) => {
-          if (job === player.reactEmoji) {
-            const cat = role[0];
-            if (!obj[cat]) obj[cat] = [];
-            obj[cat] = [...obj[cat], player];
-            findCat = true;
-          }
-        });
+      Object.entries(client.settings.reactRoles).forEach((role) => {
+        if (Array.isArray(role[1])) {
+          role[1].forEach((job) => {
+            if (job === player.reactEmoji) {
+              const cat = role[0];
+              if (!obj[cat]) obj[cat] = [];
+              obj[cat] = [...obj[cat], player];
+              findCat = true;
+            }
+          });
+        }
       });
       if (!findCat) divers = [...divers, player];
     });

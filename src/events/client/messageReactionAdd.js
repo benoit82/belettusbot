@@ -22,7 +22,7 @@ module.exports = async (client, messageReaction, user) => {
       );
       const reactEmoji = messageReaction.emoji.id
         ? messageReaction.emoji.id
-        : "✅";
+        : messageReaction.emoji.toString();
       players = [...eventTarget.players, { id: user.id, reactEmoji }];
       // update eventTarget variable
       eventTarget = await client.updateEvent(eventTarget, { players });
