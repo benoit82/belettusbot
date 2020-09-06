@@ -3,14 +3,16 @@ const { Collection } = require("discord.js");
 const { CD_COMMAND_DEFAULT } = require("../../config");
 
 module.exports = async (client, message) => {
-  if (!client.settings) client.settings = await client.getGuild(message.guild);
-  const { settings } = client;
+  if (message.author.bot) return;
+  const guildConfig = client.guildsConfig.get(message.guild.id);
+  if (!message.content.startsWith(guildConfig.prefix)) return;
   if (message.channel.type === "dm")
     return client.emit("directMessage", message);
-  if (!message.content.startsWith(settings.prefix) || message.author.bot)
-    return;
 
-  const args = message.content.trim().slice(settings.prefix.length).split(/ +/);
+  const args = message.content
+    .trim()
+    .slice(guildConfig.prefix.length)
+    .split(/ +/);
   const commandName = args.shift().toLowerCase();
 
   const command =
@@ -31,7 +33,7 @@ module.exports = async (client, message) => {
     );
 
   // check if event channel has been configure for eventCmd
-  if (settings.eventChannel === "" && commandName.match(/(addevent|ae)/))
+  if (guildConfig.eventChannel === "" && commandName.match(/(addevent|ae)/))
     return message.channel.send(
       "Il faut configurer le salon d'annonce des évènements en premier lieu, par la commande `config`.\nIl faut les droit administrateur du serveur pour l'utiliser.\nConsulte la commande `help` pour plus d'information."
     );
@@ -42,7 +44,7 @@ module.exports = async (client, message) => {
     if (command.help.usage)
       noArgsReply += "\nVoici comment utiliser la commande :";
     command.help.usage.forEach((u) => {
-      noArgsReply += `\n \`${settings.prefix}${command.help.name} ${u}\``;
+      noArgsReply += `\n \`${guildConfig.prefix}${command.help.name} ${u}\``;
     });
     return message.channel.send(noArgsReply);
   }

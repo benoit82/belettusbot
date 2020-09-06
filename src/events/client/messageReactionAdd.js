@@ -4,10 +4,10 @@ const moment = require("moment");
 module.exports = async (client, messageReaction, user) => {
   if (messageReaction.partial) await messageReaction.fetch();
   const { message } = messageReaction;
-  if (!client.settings) client.settings = await client.getGuild(message.guild);
+  const guildConfig = client.guildsConfig.get(message.guild.id);
 
   // event case
-  if (!message.channel.id === client.settings.eventChannel) return;
+  if (!message.channel.id === guildConfig.eventChannel) return;
 
   // retrieving the event
   let eventTarget = await client.getEvent({ messageID: message.id });

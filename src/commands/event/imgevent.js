@@ -2,9 +2,10 @@ const { MESSAGES } = require("../../utils/constants");
 const { embedCreateFromEvent } = require("../../utils/functions");
 
 module.exports.run = async (client, message, args) => {
-  const { settings, channels } = client;
+  const { channels } = client;
+  const guildConfig = client.guildsConfig.get(message.guild.id);
   const helpCmd = `
-    Pour plus d'information sur la commande, tapes la commande \`${settings.prefix}help ${this.help.name}\``;
+    Pour plus d'information sur la commande, tapes la commande \`${guildConfig.prefix}help ${this.help.name}\``;
   if (!args[1])
     return message.reply(`L'URL de l'image n'a pas été saisie.${helpCmd}`);
   if (!args[1].match(client.config.REGEX.URL_IMG))
@@ -22,7 +23,7 @@ module.exports.run = async (client, message, args) => {
     eventTarget = await client.updateEvent(eventTarget, {
       image: args[1],
     });
-    const evtChannel = await channels.fetch(settings.eventChannel);
+    const evtChannel = await channels.fetch(guildConfig.eventChannel);
     const originalMsg = await evtChannel.messages.fetch(eventTarget.messageID);
     const embed = embedCreateFromEvent(client, originalMsg, eventTarget);
     originalMsg.edit(embed);

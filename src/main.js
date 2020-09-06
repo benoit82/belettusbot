@@ -4,18 +4,20 @@ const {
   loadCommands,
   loadEvents,
   loadMongoose,
-  loadGuildInfo,
+  loadGuildsInfo,
 } = require("./utils/loader");
 
 const client = new Client({ partials: ["MESSAGE", "CHANNEL", "REACTION"] });
 client.config = require("./config");
-["commands", "cooldowns"].forEach((x) => (client[x] = new Collection()));
+["commands", "cooldowns", "guildsConfig"].forEach(
+  (x) => (client[x] = new Collection())
+);
 
 loadCommands(client);
 loadEvents(client);
 loadMongoose(client);
 //add mongoose custom options to client
-loadGuildInfo(client);
+loadGuildsInfo(client);
 
 // log the bot
 client.login(process.env.DISCORD_BOT_TOKEN);

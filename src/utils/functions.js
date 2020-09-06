@@ -18,10 +18,10 @@ exports.getFormatFromDate = (date) => {
 };
 
 exports.saveChannel = async (client, message, args, newSetting) => {
-  const { settings } = client;
+  const guildConfig = client.guildsConfig.get(message.guild.id);
   if (!args[1]) {
     return message.channel.send(
-      `\`#${client.channels.cache.get(settings[args[0]]).name}\``
+      `\`#${client.channels.cache.get(guildConfig[args[0]]).name}\``
     );
   }
   let res = {};
@@ -49,8 +49,7 @@ exports.saveChannel = async (client, message, args, newSetting) => {
       return;
     }
   }
-  client.settings = await client.getGuild(message.guild);
-  const chanName = client.channels.cache.get(settings[args[0]]).name;
+  const chanName = client.channels.cache.get(guildConfig[args[0]]).name;
   if (chanName) {
     message.channel.send(
       `${args[0]} mis à jour du salon : \`#${chanName}\` => \`#${res.name}\``
@@ -60,6 +59,7 @@ exports.saveChannel = async (client, message, args, newSetting) => {
 };
 
 exports.embedCreateFromEvent = (client, message, event) => {
+  const guildConfig = client.guildsConfig.get(message.guild.id);
   const author = message.channel.members.find(
     (member) => member.id === event.creator
   ).user;
@@ -101,7 +101,7 @@ exports.embedCreateFromEvent = (client, message, event) => {
     event.players.forEach((player) => {
       //if the tag is in a job list category, we add the player to the category
       let findCat = false;
-      Object.entries(client.settings.reactRoles).forEach((role) => {
+      Object.entries(guildConfig.reactRoles).forEach((role) => {
         if (Array.isArray(role[1])) {
           role[1].forEach((job) => {
             if (job === player.reactEmoji) {

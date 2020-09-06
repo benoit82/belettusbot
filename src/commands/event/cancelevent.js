@@ -4,9 +4,10 @@ const moment = require("moment");
 moment.locale("fr");
 
 module.exports.run = async (client, message, args) => {
-  const { settings, channels } = client;
+  const { channels } = client;
+  const guildConfig = client.guildsConfig.get(message.guild.id);
   const helpCmd = `
-  Pour plus d'information sur la commande, tapes la commande \`${settings.prefix}help ${this.help.name}\``;
+  Pour plus d'information sur la commande, tapes la commande \`${guildConfig.prefix}help ${this.help.name}\``;
   if (!args[0].match(client.config.REGEX.DISCORD_ID_FORMAT))
     return message.reply(`L'ID est mal saisie.${helpCmd}`);
   let eventTarget = await client.getEvent({ messageID: args[0] });
@@ -19,7 +20,7 @@ module.exports.run = async (client, message, args) => {
     eventTarget = await client.updateEvent(eventTarget, {
       status: client.config.EVENT_STATUS.cancel,
     });
-    const evtChannel = await channels.fetch(settings.eventChannel);
+    const evtChannel = await channels.fetch(guildConfig.eventChannel);
     const originalMsg = await evtChannel.messages.fetch(eventTarget.messageID);
     const embed = embedCreateFromEvent(client, originalMsg, eventTarget);
     originalMsg.edit(embed);

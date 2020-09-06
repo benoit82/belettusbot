@@ -9,10 +9,10 @@ const { logAction } = require("../../utils/botlog");
 moment.locale("fr");
 
 module.exports.run = (client, message, args) => {
-  const { settings } = client;
+  const guildConfig = client.guildsConfig.get(message.guild.id);
   const { channel } = message;
   const helpCmd = `
-Pour plus d'information sur la commande, tapes la commande \`${settings.prefix}help ${this.help.name}\``;
+Pour plus d'information sur la commande, tapes la commande \`${guildConfig.prefix}help ${this.help.name}\``;
   const nowFormat = getFormatFromDate(new Date());
   const dateFormatShowExample = `Merci de respecter ce format de saisie :\n-***\`${
     client.config.RDV_FORMAT
@@ -73,7 +73,7 @@ Pour plus d'information sur la commande, tapes la commande \`${settings.prefix}h
           //send embed to event channel
           let urlEmbedMsg = "";
           await client.channels.cache
-            .get(settings.eventChannel)
+            .get(guildConfig.eventChannel)
             .send(evtEmbed)
             .then(async (msg) => {
               urlEmbedMsg = msg.url;

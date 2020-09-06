@@ -11,7 +11,10 @@ module.exports = async (client) => {
     const createGuild = await new Guild(merged);
     createGuild
       .save()
-      .then((g) => console.log(`Nouveau serveur => ${g.guildName}`))
+      .then((g) => {
+        console.log(`Nouveau serveur => ${g.guildName}`);
+        client.guildsConfig.set(guild.id, g);
+      })
       .catch((err) =>
         console.error(
           `Une erreur est survenue durant le processus de création d'enregistrement de la guilde (serveur discord) : ${err.message}`
@@ -21,18 +24,27 @@ module.exports = async (client) => {
 
   client.getGuild = async (guild) => {
     const data = await Guild.findOne({ guildID: guild.id });
-    if (data) return data;
+    if (data) return client.guildsConfig.set(guild.id, data);
     return client.config.DEFAULTSETTINGS;
   };
 
+  client.setGuildsConfig = async () => {
+    const datas = await Guild.find();
+    if (datas) {
+      datas.forEach((data) => {
+        client.guildsConfig.set(data.guildID, data);
+      });
+    }
+  };
+
   client.updateGuild = async (guild, settings) => {
-    let data = await client.getGuild(guild);
+    let data = await client.guildsConfig.get(guild.id);
     if (typeof data !== "object") data = {};
     for (const key in settings) {
       if (data[key] !== settings[key]) data[key] = settings[key];
     }
     await data.updateOne(settings);
-    return await await client.getGuild(guild);
+    return await client.getGuild(guild);
   };
 
   client.createEvent = async (event, channel) => {
@@ -59,7 +71,7 @@ module.exports = async (client) => {
     if (data) return data;
     return;
   };
-  client.getEventByCreator = async (user) => {
+  client.getEventByCreator = async (user, guild) => {
     const datas = await Event.find({
       creator: user.id,
       status: { $ne: client.config.EVENT_STATUS.close },
@@ -67,7 +79,7 @@ module.exports = async (client) => {
     return datas ? datas : null;
   };
 
-  client.getNextEvents = async (days) => {
+  client.getNextEvents = async (days, guild) => {
     const datas = await Event.find({
       status: client.config.EVENT_STATUS.open,
       rdv: { $gte: moment(), $lte: moment().add(days, "days") },
@@ -76,14 +88,15 @@ module.exports = async (client) => {
   };
 
   client.removeOldEvents = async (guild, message = null) => {
-    const { channels, settings } = client;
+    const { channels } = client;
+    const guildConfig = client.guildsConfig.get(message.guild.id);
     const query = {
       rdv: { $lte: moment() },
       guildID: guild.id,
     };
     const datas = await Event.find(query);
     if (datas) {
-      const evtChannel = await channels.fetch(settings.eventChannel);
+      const evtChannel = await channels.fetch(guildConfig.eventChannel);
       // unpin old event / setStatus on close
       datas.forEach(async (evt) => {
         evt.status = client.config.EVENT_STATUS.close;

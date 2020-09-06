@@ -36,13 +36,14 @@ const loadMongoose = async (client) => {
   client.mongoose.init();
 };
 
-const loadGuildInfo = async (client) => {
+const loadGuildsInfo = async (client) => {
   require("./functionsDB")(client);
+  client.setGuildsConfig();
 };
 
 module.exports = {
   loadCommands,
   loadEvents,
   loadMongoose,
-  loadGuildInfo,
+  loadGuildsInfo,
 };

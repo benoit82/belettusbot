@@ -5,12 +5,12 @@ const { readdirSync } = require("fs");
 const categoryList = readdirSync("src/commands");
 
 module.exports.run = (client, message, args) => {
-  const { settings } = client;
+  const guildConfig = client.guildsConfig.get(message.guild.id);
   if (!args.length) {
     const embed = new MessageEmbed().setColor(TYPE.default.color).addField(
       "Liste des commandes",
       `Une liste de toutes les sous-catégories disponibles et leurs commandes.
-Pour plus d'informations sur une commande, tapes \`${settings.prefix}help <command_name>\``
+Pour plus d'informations sur une commande, tapes \`${guildConfig.prefix}help <command_name>\``
     );
 
     for (const category of categoryList) {
@@ -35,10 +35,10 @@ Pour plus d'informations sur une commande, tapes \`${settings.prefix}help <comma
     let usage = "";
     if (command.help.usage) {
       command.help.usage.forEach((u) => {
-        usage += `${settings.prefix + command.help.name} ${u}\n`;
+        usage += `${guildConfig.prefix + command.help.name} ${u}\n`;
       });
     } else {
-      usage = settings.prefix + command.help.name;
+      usage = guildConfig.prefix + command.help.name;
     }
 
     const embed = new MessageEmbed()

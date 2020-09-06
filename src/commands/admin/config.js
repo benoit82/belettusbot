@@ -1,7 +1,7 @@
 const { MESSAGES } = require("../../utils/constants");
 const { saveChannel } = require("../../utils/functions");
 module.exports.run = async (client, message, args) => {
-  const { settings } = client;
+  const guildConfig = client.guildsConfig.get(message.guild.id);
   const getSetting = args[0];
   const newSetting = args.slice(1).join(" ");
   if (getSetting.match(client.config.REGEX.CHANNELS)) {
@@ -10,26 +10,25 @@ module.exports.run = async (client, message, args) => {
   if (getSetting === "prefix") {
     if (newSetting) {
       await client.updateGuild(message.guild, { prefix: newSetting });
-      client.settings = await client.getGuild(message.guild);
       return message.channel.send(
-        `Prefix mis à jour: \`${settings.prefix}\` => \`${newSetting}\``
+        `Prefix mis à jour: \`${guildConfig.prefix}\` => \`${newSetting}\``
       );
     }
-    message.channel.send("`" + settings.prefix + "`");
+    message.channel.send("`" + guildConfig.prefix + "`");
   }
   if (getSetting === "react") {
     if (args[1] && args[1] === "reset") {
       const isRoleInputed =
         args[2] && client.config.LIST_ROLE.includes(args[2]);
       if (isRoleInputed) {
-        client.settings.reactRoles[args[2]] = [];
+        guildConfig.reactRoles[args[2]] = [];
       } else {
         client.config.LIST_ROLE.forEach(async (role) => {
-          client.settings.reactRoles[role] = [];
+          guildConfig.reactRoles[role] = [];
         });
       }
       client.updateGuild(message.guild, {
-        reactRoles: client.settings.reactRoles,
+        reactRoles: guildConfig.reactRoles,
       });
       const confMsg = isRoleInputed
         ? `Les réactions du rôle \`${args[2]}\` ont été éffacé.`
@@ -39,10 +38,9 @@ module.exports.run = async (client, message, args) => {
     }
     client.config.LIST_ROLE.forEach(async (role) => {
       const msg = await message.channel.send(role);
-      if (!client.settings.reactRoles[role])
-        client.settings.reactRoles[role] = [];
-      if (client.settings.reactRoles[role].length > 0) {
-        client.settings.reactRoles[role].forEach((emoji) => {
+      if (!guildConfig.reactRoles[role]) guildConfig.reactRoles[role] = [];
+      if (guildConfig.reactRoles[role].length > 0) {
+        guildConfig.reactRoles[role].forEach((emoji) => {
           msg.react(emoji);
         });
       }
@@ -56,14 +54,14 @@ module.exports.run = async (client, message, args) => {
         let reac = reaction.emoji.id
           ? reaction.emoji.id
           : reaction.emoji.toString();
-        if (!client.settings.reactRoles[role].includes(reac)) {
-          client.settings.reactRoles[role].push(reac);
+        if (!guildConfig.reactRoles[role].includes(reac)) {
+          guildConfig.reactRoles[role].push(reac);
         }
       });
 
       msgReactCollector.on("end", async () => {
         await client.updateGuild(message.guild, {
-          reactRoles: client.settings.reactRoles,
+          reactRoles: guildConfig.reactRoles,
         });
         msg.delete();
         message.channel
