@@ -71,23 +71,25 @@ module.exports = async (client) => {
     if (data) return data;
     return;
   };
-  client.getEventByCreator = async (user, guild) => {
+  client.getActiveEventsByCreator = async (user, guild) => {
     const datas = await Event.find({
       creator: user.id,
-      status: { $ne: client.config.EVENT_STATUS.close },
+      guildID: guild.id,
+      status: client.config.EVENT_STATUS.open,
     });
     return datas ? datas : null;
   };
 
-  client.getNextEvents = async (days, guild) => {
+  client.getNextActiveEvents = async (days, guild) => {
     const datas = await Event.find({
       status: client.config.EVENT_STATUS.open,
+      guildID: guild.id,
       rdv: { $gte: moment(), $lte: moment().add(days, "days") },
     });
     return datas ? datas : null;
   };
 
-  client.removeOldEvents = async (guild, message = null) => {
+  client.removeOldEvents = async (guild, message) => {
     const { channels } = client;
     const guildConfig = client.guildsConfig.get(message.guild.id);
     const query = {

@@ -3,7 +3,10 @@ const moment = require("moment");
 moment.locale("fr");
 
 module.exports.run = async (client, message, args) => {
-  let events = await client.getEventByCreator(message.author);
+  let events = await client.getActiveEventsByCreator(
+    message.author,
+    message.guild
+  );
   if (events) {
     events = events.sort((e1, e2) => {
       return e1.rdv > e2.rdv ? 1 : -1;
