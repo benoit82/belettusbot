@@ -18,7 +18,7 @@ const MESSAGES = {
         ],
         typeInfoLog: TYPE.info.label,
         category: "admin",
-        isUserAdmin: true,
+        isUserAdmin: false,
       },
     },
     EVENT: {
