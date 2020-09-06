@@ -115,12 +115,12 @@ module.exports = async (client) => {
           : client.config.TYPE.warning.label;
         return logAction(
           client,
+          message,
           {
             name: "clearEvents",
             typeInfoLog,
           },
-          feedback,
-          message
+          feedback
         );
       });
     }

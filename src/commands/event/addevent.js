@@ -90,9 +90,9 @@ Pour plus d'information sur la commande, tapes la commande \`${guildConfig.prefi
           );
           logAction(
             client,
+            message,
             this.help,
-            `Evènement créé.\nURL : ${urlEmbedMsg}`,
-            message
+            `Evènement créé.\nURL : ${urlEmbedMsg}`
           );
         }
         botIsWaitingForFeedback = false;
