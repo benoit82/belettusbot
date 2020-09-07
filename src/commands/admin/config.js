@@ -45,7 +45,7 @@ module.exports.run = async (client, message, args) => {
         });
       }
       const filter = (reaction, user) => {
-        return user.id === user.id;
+        return message.guild.roles.highest.members.has(user.id);
       };
       const msgReactCollector = msg.createReactionCollector(filter, {
         idle: 30000,

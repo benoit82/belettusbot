@@ -25,11 +25,10 @@ module.exports = async (client, message) => {
   // check user restriction
   if (
     command.help.isUserAdmin &&
-    (!message.member.hasPermission("ADMINISTRATOR") ||
-      message.member.id !== process.env.CREATOR_ID)
+    !message.guild.roles.highest.members.has(message.member.id)
   )
     return message.channel.send(
-      "Un rang `Administrateur` est nécéssaire pour utiliser cette commande."
+      `Le rôle \`${message.guild.roles.highest.name}\` est nécéssaire pour utiliser cette commande.`
     );
 
   // check if event channel has been configure for eventCmd

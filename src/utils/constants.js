@@ -18,7 +18,7 @@ const MESSAGES = {
         ],
         typeInfoLog: TYPE.info.label,
         category: "admin",
-        isUserAdmin: false,
+        isUserAdmin: true,
       },
     },
     EVENT: {
@@ -119,7 +119,7 @@ const MESSAGES = {
         usage: [`<${RDV_FORMAT}>`],
         cooldown: 100,
         category: "misc",
-        isUserAdmin: false,
+        isUserAdmin: true,
       },
     },
   },
