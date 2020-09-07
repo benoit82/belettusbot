@@ -13,6 +13,7 @@ const MESSAGES = {
           "eventChannel <id_du_salon | nom_du_salon (sans le #)>",
           "prefix <valeur>",
           "react",
+          "react <Tanks | Healers | DPS | Flex>",
           "react reset",
           "react reset <Tanks | Healers | DPS | Flex>",
         ],

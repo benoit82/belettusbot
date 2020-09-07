@@ -4,6 +4,44 @@ module.exports.run = async (client, message, args) => {
   const guildConfig = client.guildsConfig.get(message.guild.id);
   const getSetting = args[0];
   const newSetting = args.slice(1).join(" ");
+  const addReact = async (role) => {
+    const msg = await message.channel.send(role);
+    if (!guildConfig.reactRoles[role]) guildConfig.reactRoles[role] = [];
+    if (guildConfig.reactRoles[role].length > 0) {
+      guildConfig.reactRoles[role].forEach((emoji) => {
+        msg.react(emoji);
+      });
+    }
+    const filter = (reaction, user) => {
+      return message.guild.roles.highest.members.has(user.id);
+    };
+    const msgReactCollector = msg.createReactionCollector(filter, {
+      idle: 30000,
+    });
+    msgReactCollector.on("collect", (reaction) => {
+      let reac = reaction.emoji.id
+        ? reaction.emoji.id
+        : reaction.emoji.toString();
+      if (!guildConfig.reactRoles[role].includes(reac)) {
+        guildConfig.reactRoles[role].push(reac);
+      }
+    });
+
+    msgReactCollector.on("end", async () => {
+      await client.updateGuild(message.guild, {
+        reactRoles: guildConfig.reactRoles,
+      });
+      msg.delete();
+      message.channel
+        .send("réaction `" + role + "` sauvegardé.")
+        .then((msg) => {
+          setTimeout(() => {
+            msg.delete();
+          }, 3000);
+        });
+    });
+  };
+
   if (getSetting.match(client.config.REGEX.CHANNELS)) {
     await saveChannel(client, message, args, newSetting);
   }
@@ -36,43 +74,11 @@ module.exports.run = async (client, message, args) => {
       message.channel.send(confMsg);
       return;
     }
-    client.config.LIST_ROLE.forEach(async (role) => {
-      const msg = await message.channel.send(role);
-      if (!guildConfig.reactRoles[role]) guildConfig.reactRoles[role] = [];
-      if (guildConfig.reactRoles[role].length > 0) {
-        guildConfig.reactRoles[role].forEach((emoji) => {
-          msg.react(emoji);
-        });
-      }
-      const filter = (reaction, user) => {
-        return message.guild.roles.highest.members.has(user.id);
-      };
-      const msgReactCollector = msg.createReactionCollector(filter, {
-        idle: 30000,
-      });
-      msgReactCollector.on("collect", (reaction) => {
-        let reac = reaction.emoji.id
-          ? reaction.emoji.id
-          : reaction.emoji.toString();
-        if (!guildConfig.reactRoles[role].includes(reac)) {
-          guildConfig.reactRoles[role].push(reac);
-        }
-      });
-
-      msgReactCollector.on("end", async () => {
-        await client.updateGuild(message.guild, {
-          reactRoles: guildConfig.reactRoles,
-        });
-        msg.delete();
-        message.channel
-          .send("réaction `" + role + "` sauvegardé.")
-          .then((msg) => {
-            setTimeout(() => {
-              msg.delete();
-            }, 3000);
-          });
-      });
-    });
+    if (args[1] && client.config.LIST_ROLE.includes(args[1])) {
+      addReact(args[1]);
+    } else {
+      client.config.LIST_ROLE.forEach((role) => addReact(role));
+    }
   }
 };
 
