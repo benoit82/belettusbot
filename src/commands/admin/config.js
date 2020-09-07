@@ -76,8 +76,6 @@ module.exports.run = async (client, message, args) => {
     }
     if (args[1] && client.config.LIST_ROLE.includes(args[1])) {
       addReact(args[1]);
-    } else {
-      client.config.LIST_ROLE.forEach((role) => addReact(role));
     }
   }
 };
