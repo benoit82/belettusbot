@@ -4,8 +4,13 @@ module.exports.run = async (client, message, args) => {
   const guildConfig = client.guildsConfig.get(message.guild.id);
   const getSetting = args[0];
   const newSetting = args.slice(1).join(" ");
+  const idle = 20000;
   const addReact = async (role) => {
-    const msg = await message.channel.send(role);
+    const msg = await message.channel.send(
+      `Configuration pour le rôle \`${role}\`, ajoute les réactions à ce message. L'enregistrement sera fait ${
+        idle / 1000
+      } secondes sans activité sur ce message.`
+    );
     if (!guildConfig.reactRoles[role]) guildConfig.reactRoles[role] = [];
     if (guildConfig.reactRoles[role].length > 0) {
       guildConfig.reactRoles[role].forEach((emoji) => {
@@ -16,7 +21,7 @@ module.exports.run = async (client, message, args) => {
       return message.guild.roles.highest.members.has(user.id);
     };
     const msgReactCollector = msg.createReactionCollector(filter, {
-      idle: 30000,
+      idle,
     });
     msgReactCollector.on("collect", (reaction) => {
       let reac = reaction.emoji.id
