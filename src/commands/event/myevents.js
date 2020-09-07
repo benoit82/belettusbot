@@ -7,7 +7,7 @@ module.exports.run = async (client, message, args) => {
     message.author,
     message.guild
   );
-  if (events) {
+  if (events && events.length > 0) {
     events = events.sort((e1, e2) => {
       return e1.rdv > e2.rdv ? 1 : -1;
     });
