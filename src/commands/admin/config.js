@@ -7,7 +7,7 @@ module.exports.run = async (client, message, args) => {
   const idle = 20000;
   const addReact = async (role) => {
     const msg = await message.channel.send(
-      `Configuration pour le rôle \`${role}\`, ajoute les réactions à ce message. L'enregistrement sera fait ${
+      `Configuration pour le rôle ***\`${role}\`***, ajoute les réactions à ce message. L'enregistrement sera fait ${
         idle / 1000
       } secondes sans activité sur ce message.`
     );
