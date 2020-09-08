@@ -1,4 +1,5 @@
-# belettusbot : https://discord.com/api/oauth2/authorize?client_id=748585400083152966&permissions=1010896&scope=bot
+# belettusbot : 
+https://discord.com/api/oauth2/authorize?client_id=748585400083152966&permissions=1010896&scope=bot
 
 Bot créé pour aider la communauté auquel j'appartiens sur Discord.
 
@@ -7,7 +8,7 @@ Pour ce projet, j'utilise l'API de DiscordJS (v12.3.1), une base de donnée Mong
 Exemple d'évènement :
 https://i.imgur.com/LwUPBwh.png
 
-Commandes disponibles :
+# Commandes disponibles
 - help : liste les commandes disponibles par le bot et fourni les informations pour chacune d'elle afin de guider les utilisateurs dans son utilisation.
 - addevent : créer un nouvel évènement. Les utilisateurs peuvent s'inscrire en réagissant au post de l'évènement et le BOT met à jour automatiquement les inscrits selon la réaction, comme on peux le voir sur l'exemple.
 - cancelevent : annule un évènement. Si des utilisateurs se sont inscrit, le bot leur envoye un message privé pour les prévenir de l'annulation.
@@ -19,7 +20,7 @@ Commandes disponibles :
 Commandes d'administrateur (réservé aux membres au role le plus élèvé):
 - config : pour configurer les réactions aux évènements, changer le préfix d'appel au bot, paramètrer les salons de log et d'évènement.
 
-Futurs idées de développement :
+# Futurs idées de développement
 - affichage de l'ordre des inscriptions (priorisation si trop d'inscrit)
 - commande :
   - eventupdate (date/URLimage) pour modifier une date/heure d'un évènement et prévenir les inscrits des changements. Cette commande annulera la commande imgevent devenu obsolète.
