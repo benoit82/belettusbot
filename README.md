@@ -1,4 +1,4 @@
-# belettusbot
+# belettusbot : https://discord.com/api/oauth2/authorize?client_id=748585400083152966&permissions=1010896&scope=bot
 
 Bot créé pour aider la communauté auquel j'appartiens sur Discord.
 
