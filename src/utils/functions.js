@@ -98,7 +98,20 @@ exports.embedCreateFromEvent = (client, message, event) => {
   let obj = {};
   let divers = [];
   if (event.players && event.players.length > 0) {
-    event.players.forEach((player) => {
+    // sort the player list by registration date
+    event.players.sort((p1, p2) => {
+      return p1.registrationDate &&
+        p2.registrationDate &&
+        p1.registrationDate > p2.registrationDate
+        ? 1
+        : -1;
+    });
+    me.addField(
+      "`Participants *#XX = ordre d'inscription*`",
+      `${event.players.length} personne(s) inscrite(s)`
+    );
+    event.players.forEach((player, index) => {
+      player.order = player.registrationDate ? index + 1 : "??"; // case for event before 1.1.0
       //if the tag is in a job list category, we add the player to the category
       let findCat = false;
       Object.entries(guildConfig.reactRoles).forEach((role) => {
@@ -130,7 +143,15 @@ exports.embedCreateFromEvent = (client, message, event) => {
           )
             ? client.emojis.cache.get(player.reactEmoji).toString()
             : player.reactEmoji;
-          playersStringBuilder += emojiBuilder + " <@" + player.id + ">\n";
+          playersStringBuilder +=
+            "**#" +
+            player.order.toString().padStart(2, "0") +
+            "**-" +
+            emojiBuilder +
+            " <@" +
+            player.id +
+            ">\n";
+          //playersStringBuilder += emojiBuilder + " <@" + player.id + ">\n";
         });
         // finally we add fieds
         me.addField(
