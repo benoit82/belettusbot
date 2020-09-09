@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 module.exports = {
-  DBCONNECTION: `mongodb+srv://${process.env.MONGODB_ATLAS_USER}:${process.env.MONGODB_ATLAS_PWD}@bbotdb.xhqrs.mongodb.net/belettusDB`,
+  DBCONNECTION: `mongodb+srv://${process.env.MONGODB_ATLAS_USER}:${process.env.MONGODB_ATLAS_PWD}@${process.env.MONGODB_ATLAS_ADDRESS}/belettusDB`,
   TYPE: {
     info: { label: "info", color: "#00d921" },
     warning: { label: "warning", color: "#d5d900" },
