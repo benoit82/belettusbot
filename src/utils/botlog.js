@@ -21,7 +21,6 @@ module.exports.logAction = (client, message, help, description) => {
       .setTimestamp()
       .setDescription(description)
       .setAuthor(message.author.username, message.author.avatarURL());
+    client.channels.cache.get(guildConfig.logChannel).send(embed);
   }
-
-  client.channels.cache.get(guildConfig.logChannel).send(embed);
 };
