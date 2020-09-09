@@ -1,6 +1,6 @@
 {
   "name": "belettusbot",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "bot to manage events",
   "main": "./src/main.js",
   "author": "Benoît Dubus",
