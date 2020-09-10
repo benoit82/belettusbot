@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { Guild, Event } = require("../models");
+const { Guild, Event, Template } = require("../models");
 const moment = require("moment");
 const { logAction } = require("./botlog");
 const { embedCreateFromEvent } = require("./functions");
@@ -13,7 +13,7 @@ module.exports = async (client) => {
       .save()
       .then((g) => {
         console.log(`Nouveau serveur => ${g.guildName}`);
-        client.guildsConfig.set(guild.id, g);
+        client.guildsConfig.set(g.guildID, g);
       })
       .catch((err) =>
         console.error(
