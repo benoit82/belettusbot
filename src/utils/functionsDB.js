@@ -135,4 +135,45 @@ module.exports = async (client) => {
     await data.updateOne(settings);
     return await client.getEvent(event);
   };
+
+  client.createTemplate = async (template, channel) => {
+    const merged = Object.assign({ _id: mongoose.Types.ObjectId() }, template);
+    const createTmpl = await new Template(merged);
+    try {
+      const tmplCreated = await createTmpl.save();
+      channel.send(`Modèle d'évènement créé => ${template.name}`);
+      return tmplCreated;
+    } catch (error) {
+      channel.send(
+        `⚠️ Une erreur est survenue durant le processus de la création du template ⚠️\n${error.message}\nVeuillez recommencer ultérieurement.`
+      );
+      return false;
+    }
+  };
+
+  client.updateTemplate = async (template, settings) => {
+    let data = await client.getTemplateByName(template.name);
+    if (typeof data !== "object") data = {};
+    for (const key in settings) {
+      if (data[key] !== settings[key]) data[key] = settings[key];
+    }
+    await data.updateOne(settings);
+    return await client.getTemplateByName(template.name);
+  };
+
+  client.getTemplateByName = async (name) => {
+    const data = await Template.findOne({ name });
+    return data;
+  };
+  client.getTemplates = async (lang) => {
+    const datas = await Template.find({ lang });
+    return datas;
+  };
+
+  client.deleteTemplate = async (name) => {
+    const data = await Template.findOne({ name });
+    if (data !== null) {
+      return await Template.deleteOne({ name });
+    }
+  };
 };

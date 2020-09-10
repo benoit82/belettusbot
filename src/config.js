@@ -18,6 +18,7 @@ module.exports = {
     URL_IMG: /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png|jpeg)/,
     DISCORD_ID_FORMAT: /^([0-9]*)$/,
     CHANNELS: /(logChannel|eventChannel)/,
+    STRING_BETWEEN_DOUBLE_QUOTE: /(["'])(?:(?=(\\?))\2.)*?\1/,
   },
   RDV_FORMAT: "JJMMAAAA HH mm",
   LIST_ROLE: ["Tanks", "Healers", "DPS", "Flex"],

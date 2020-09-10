@@ -1,4 +1,5 @@
 module.exports = {
-  Guild: require("./guild"),
   Event: require("./event"),
+  Guild: require("./guild"),
+  Template: require("./template"),
 };

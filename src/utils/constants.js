@@ -55,6 +55,21 @@ const MESSAGES = {
         category: "event",
         isUserAdmin: true,
       },
+      EVENTTEMPLATE: {
+        name: "eventtemplate",
+        aliases: ["eventtemplate", "et"],
+        description: "Gestion des modèles d'évènement.",
+        usage: [
+          "list",
+          'create <nom> <"titre"> <URL_image (optionnel)> <"description" (optionnel)>',
+          'update <nom> <"titre"> <URL_image (optionnel)> <"description" (optionnel)>',
+          "delete <nom>",
+        ],
+        args: true,
+        isUserAdmin: false,
+        typeInfoLog: TYPE.info.label,
+        category: "event",
+      },
       IMGEVENT: {
         name: "imgevent",
         aliases: ["imgevent", "ie"],
