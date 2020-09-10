@@ -72,18 +72,21 @@ Pour plus d'information sur la commande, tapes la commande \`${guildConfig.prefi
 
           //send embed to event channel
           let urlEmbedMsg = "";
-          await client.channels.cache
-            .get(guildConfig.eventChannel)
-            .send(evtEmbed)
-            .then(async (msg) => {
-              urlEmbedMsg = msg.url;
-              // enregistrement du message et son url dans l'evenement en BD
-              await client.updateEvent(evt, {
-                messageLink: urlEmbedMsg,
-                messageID: msg.id,
-              });
-              msg.pin({ reason: "nouvel évènement" });
+          const eventChannel = await client.channels.cache.get(
+            guildConfig.eventChannel
+          );
+          eventChannel.send(evtEmbed).then(async (msg) => {
+            urlEmbedMsg = msg.url;
+            // enregistrement du message et son url dans l'evenement en BD
+            await client.updateEvent(evt, {
+              messageLink: urlEmbedMsg,
+              messageID: msg.id,
             });
+            msg.pin({ reason: "nouvel évènement" });
+            await eventChannel.send(
+              "🤖 @here un nouvel évènement vient juste d'être posté 😃. N'hésitez pas à vous inscrire Bee-boop ! 🤖"
+            );
+          });
 
           message.reply(
             `Le message d'inscription a été créé, épinglé et est disponible ici : ${urlEmbedMsg}\nN'oublie pas de t'y inscrire en ajoutant une réaction 😜.`
