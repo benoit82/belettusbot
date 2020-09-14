@@ -77,11 +77,12 @@ module.exports.run = async (client, message, args) => {
     }
   };
   const displayList = async function (lang) {
-    const templates = await client.getTemplates(message.guild.id, lang);
+    let templates = await client.getTemplates(message.guild.id, lang);
     if (templates.length === 0) {
       message.reply("il n'y a aucun modèle actuellement");
     } else {
       let msgBuilder = "la liste des modèles d'évènements :\n";
+      templates.sort((t1, t2) => (t1.name > t2.name ? 1 : -1));
       templates.forEach((tmpl) => {
         msgBuilder += "`" + tmpl.name + "` : " + tmpl.title + "\n";
       });
