@@ -3,7 +3,7 @@ const { REGEX } = require("../../config");
 const { MessageCollector, Collector } = require("discord.js");
 
 module.exports.run = async (client, message, args) => {
-  const manegeTemplate = async function (settings, action) {
+  const manegeTemplate = async function (settings, action, lang) {
     const name = args[1];
     const title = settings.split(/"/gi)[1];
     const description = settings.split(/"/gi)[3] || "";
@@ -13,7 +13,7 @@ module.exports.run = async (client, message, args) => {
         "Il faut respecter la syntaxe de la commande.\nVérifies si le nom du pattern est en un seul mot et si le titre est bien entre 2 doubles quotes `\"\"`.\nL'URL de l'illustration est optionnel."
       );
     } else {
-      const tmplFromDB = await client.getTemplateByName(name);
+      const tmplFromDB = await client.getTemplateByName(name, lang);
       if (action === "create" && tmplFromDB !== null) {
         return message.reply(
           "Un modèle porte déjà ce nom, consultes la liste avec la commande `list`, puis recommances."
@@ -91,7 +91,7 @@ module.exports.run = async (client, message, args) => {
         break;
       case "delete":
         if (args[1]) {
-          const deleted = await client.deleteTemplate(args[1]);
+          const deleted = await client.deleteTemplate(args[1], "fr");
           const conf = deleted ? "modèle supprimé" : "modèle non trouvé";
           message.reply(conf);
         } else {

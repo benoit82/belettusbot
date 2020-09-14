@@ -27,7 +27,7 @@ const MESSAGES = {
         aliases: ["addevent", "ae"],
         description:
           "Ajoute un évènement pour la communauté, FFXIV ou autres... Même les soirées barbec'!",
-        usage: ['"<titre>"', '"<titre>" <url illustration>'],
+        usage: ['"<titre>"', '"<titre>" <url illustration>', "!<nom_modèle>"],
         args: true,
         typeInfoLog: TYPE.info.label,
         isUserAdmin: false,

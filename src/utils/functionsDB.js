@@ -152,17 +152,18 @@ module.exports = async (client) => {
   };
 
   client.updateTemplate = async (template, settings) => {
-    let data = await client.getTemplateByName(template.name);
+    let data = await client.getTemplateByName(template.name, template.lang);
     if (typeof data !== "object") data = {};
     for (const key in settings) {
       if (data[key] !== settings[key]) data[key] = settings[key];
     }
     await data.updateOne(settings);
-    return await client.getTemplateByName(template.name);
+    return await client.getTemplateByName(template.name, template.lang);
   };
 
-  client.getTemplateByName = async (name) => {
-    const data = await Template.findOne({ name });
+  client.getTemplateByName = async (name, lang) => {
+    const data = await Template.findOne({ name, lang });
+    if (typeof data !== "object") data = null;
     return data;
   };
   client.getTemplates = async (lang) => {
@@ -170,10 +171,10 @@ module.exports = async (client) => {
     return datas;
   };
 
-  client.deleteTemplate = async (name) => {
-    const data = await Template.findOne({ name });
+  client.deleteTemplate = async (name, lang) => {
+    const data = await Template.findOne({ name, lang });
     if (data !== null) {
-      return await Template.deleteOne({ name });
+      return await Template.deleteOne({ name, lang });
     }
   };
 };
