@@ -166,7 +166,6 @@ module.exports = async (client) => {
       name,
       guildID,
     });
-    console.log(data);
     if (typeof data !== "object") data = null;
     return data;
   };
