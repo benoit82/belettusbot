@@ -136,7 +136,10 @@ Pour plus d'information sur la commande, tapes la commande \`${guildConfig.prefi
     }
     const rdv = moment(args.slice(1).join(), "DDMMYYYYHHmm").toJSON();
     //check if the template name exist in DB
-    const templateFromDB = await client.getTemplateByName(templateName, "fr");
+    const templateFromDB = await client.getTemplateByName(
+      templateName,
+      message.guild.id
+    );
     //check rdv format and validation
 
     if (templateFromDB === null) {

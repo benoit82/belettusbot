@@ -7,6 +7,7 @@ const templateSchema = mongoose.Schema({
   image: String, // url image for description
   description: String,
   creator: String, // member guild tag
+  guildID: String,
   createdAt: {
     type: Number,
     default: () => Math.floor(Date.now() / 1000),

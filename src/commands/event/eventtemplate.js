@@ -1,6 +1,6 @@
 const { MESSAGES } = require("../../utils/constants");
 const { REGEX } = require("../../config");
-const { MessageCollector, Collector } = require("discord.js");
+const { MessageCollector } = require("discord.js");
 
 module.exports.run = async (client, message, args) => {
   const manegeTemplate = async function (settings, action, lang) {
@@ -13,7 +13,11 @@ module.exports.run = async (client, message, args) => {
         "Il faut respecter la syntaxe de la commande.\nVérifies si le nom du pattern est en un seul mot et si le titre est bien entre 2 doubles quotes `\"\"`.\nL'URL de l'illustration est optionnel."
       );
     } else {
-      const tmplFromDB = await client.getTemplateByName(name, lang);
+      console.log("name :>> ", name);
+      console.log("title :>> ", title);
+      console.log("message.guild.id :>> ", message.guild.id);
+      const tmplFromDB = await client.getTemplateByName(name, message.guild.id);
+      console.log(tmplFromDB);
       if (action === "create" && tmplFromDB !== null) {
         return message.reply(
           "Un modèle porte déjà ce nom, consultes la liste avec la commande `list`, puis recommances."
@@ -43,10 +47,15 @@ module.exports.run = async (client, message, args) => {
             image,
             description,
             creator: message.author.id,
+            guildID: message.guild.id,
           };
           switch (action) {
             case "create":
-              await client.createTemplate(newTmpl, message.channel);
+              await client.createTemplate(
+                newTmpl,
+                message.channel,
+                message.guild.id
+              );
               break;
             case "update":
               await client.updateTemplate(tmplFromDB, newTmpl);
@@ -68,7 +77,7 @@ module.exports.run = async (client, message, args) => {
     }
   };
   const displayList = async function (lang) {
-    const templates = await client.getTemplates(lang);
+    const templates = await client.getTemplates(message.guild.id, lang);
     if (templates.length === 0) {
       message.reply("il n'y a aucun modèle actuellement");
     } else {
@@ -91,9 +100,19 @@ module.exports.run = async (client, message, args) => {
         break;
       case "delete":
         if (args[1]) {
-          const deleted = await client.deleteTemplate(args[1], "fr");
-          const conf = deleted ? "modèle supprimé" : "modèle non trouvé";
-          message.reply(conf);
+          const templToDelete = await client.getTemplateByName(
+            args[1],
+            message.guild.id
+          );
+          if (
+            templToDelete !== null &&
+            templToDelete.creator === message.author.id
+          ) {
+            await client.deleteTemplate(args[1], "fr");
+            message.reply("modèle supprimé");
+          } else {
+            message.reply("tu n'es pas l'auteur du modèle");
+          }
         } else {
           message.reply("Argument de commande manquante.");
         }

@@ -152,22 +152,26 @@ module.exports = async (client) => {
   };
 
   client.updateTemplate = async (template, settings) => {
-    let data = await client.getTemplateByName(template.name, template.lang);
+    let data = await client.getTemplateByName(template.name, template.guildID);
     if (typeof data !== "object") data = {};
     for (const key in settings) {
       if (data[key] !== settings[key]) data[key] = settings[key];
     }
     await data.updateOne(settings);
-    return await client.getTemplateByName(template.name, template.lang);
+    return await client.getTemplateByName(template.name, template.guildID);
   };
 
-  client.getTemplateByName = async (name, lang) => {
-    const data = await Template.findOne({ name, lang });
+  client.getTemplateByName = async (name, guildID) => {
+    const data = await Template.findOne({
+      name,
+      guildID,
+    });
+    console.log(data);
     if (typeof data !== "object") data = null;
     return data;
   };
-  client.getTemplates = async (lang) => {
-    const datas = await Template.find({ lang });
+  client.getTemplates = async (guildID, lang) => {
+    const datas = await Template.find({ guildID, lang });
     return datas;
   };
 
