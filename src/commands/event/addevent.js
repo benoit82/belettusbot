@@ -43,7 +43,7 @@ Pour plus d'information sur la commande, tapes la commande \`${guildConfig.prefi
         });
         msg.pin({ reason: "nouvel évènement" });
         await eventChannel.send(
-          "🤖 @here un nouvel évènement vient juste d'être posté 😃. N'hésitez pas à vous inscrire Bee-boop ! 🤖"
+          `🤖 @here un nouvel évènement vient juste d'être posté 😃. N'hésitez pas à vous inscrire Bee-boop ! 🤖\n*Pour soutenir mon créateur, et améliorer mes performances :* **${process.env.TIPEEE_PAGE}**`
         );
       });
       message.reply(
