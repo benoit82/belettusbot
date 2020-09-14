@@ -28,7 +28,7 @@ module.exports = async (client, message) => {
     !message.guild.roles.highest.members.has(message.member.id)
   )
     return message.channel.send(
-      `Le rôle \`${message.guild.roles.highest.name}\` est nécéssaire pour utiliser cette commande.`
+      `Tu dois avoir le rôle \`${message.guild.roles.highest.name}\` pour pouvoir utiliser cette commande.`
     );
 
   // check if event channel has been configure for eventCmd
