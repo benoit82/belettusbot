@@ -77,12 +77,11 @@ module.exports.run = async (client, message, args) => {
     if (templates.length === 0) {
       message.reply("il n'y a aucun modèle actuellement");
     } else {
-      let msgBuilder = "la liste des modèles d'évènements :\n";
+      message.reply("la liste des modèles d'évènements :");
       templates.sort((t1, t2) => (t1.name > t2.name ? 1 : -1));
       templates.forEach((tmpl) => {
-        msgBuilder += "`" + tmpl.name + "` : " + tmpl.title + "\n";
+        message.channel.send(`\`${tmpl.name}\` : ${tmpl.title}`);
       });
-      message.reply(msgBuilder);
     }
   };
 
