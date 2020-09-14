@@ -13,11 +13,7 @@ module.exports.run = async (client, message, args) => {
         "Il faut respecter la syntaxe de la commande.\nVérifies si le nom du pattern est en un seul mot et si le titre est bien entre 2 doubles quotes `\"\"`.\nL'URL de l'illustration est optionnel."
       );
     } else {
-      console.log("name :>> ", name);
-      console.log("title :>> ", title);
-      console.log("message.guild.id :>> ", message.guild.id);
       const tmplFromDB = await client.getTemplateByName(name, message.guild.id);
-      console.log(tmplFromDB);
       if (action === "create" && tmplFromDB !== null) {
         return message.reply(
           "Un modèle porte déjà ce nom, consultes la liste avec la commande `list`, puis recommances."
