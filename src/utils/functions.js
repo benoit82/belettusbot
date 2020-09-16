@@ -138,9 +138,7 @@ exports.embedCreateFromEvent = (client, message, event) => {
       .forEach((category) => {
         let playersStringBuilder = "";
         category[1].forEach((player) => {
-          const emojiBuilder = player.reactEmoji.match(
-            client.config.REGEX.DISCORD_ID_FORMAT
-          )
+          const emojiBuilder = client.emojis.cache.has(player.reactEmoji)
             ? client.emojis.cache.get(player.reactEmoji).toString()
             : player.reactEmoji;
           playersStringBuilder +=
