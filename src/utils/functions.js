@@ -60,9 +60,9 @@ exports.saveChannel = async (client, message, args, newSetting) => {
 
 exports.embedCreateFromEvent = (client, message, event) => {
   const guildConfig = client.guildsConfig.get(message.guild.id);
-  const author = message.channel.members.find(
-    (member) => member.id === event.creator
-  ).user;
+  const author =
+    message.channel.members.find((member) => member.id === event.creator)
+      .user || client.user;
 
   const me = new MessageEmbed()
     .setAuthor(author.username, author.avatarURL())
