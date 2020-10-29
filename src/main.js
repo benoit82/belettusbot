@@ -21,3 +21,10 @@ loadGuildsInfo(client);
 
 // log the bot
 client.login(process.env.DISCORD_BOT_TOKEN);
+
+// set interval to auto-remove old event every hours
+setInterval(() => {
+  client.guilds.cache.each(async (guild) => {
+    await client.removeOldEvents(guild);
+  });
+}, 360 * 1000);

@@ -89,9 +89,9 @@ module.exports = async (client) => {
     return datas ? datas : null;
   };
 
-  client.removeOldEvents = async (guild, message) => {
+  client.removeOldEvents = async (guild, message = undefined) => {
     const { channels } = client;
-    const guildConfig = client.guildsConfig.get(message.guild.id);
+    const guildConfig = client.guildsConfig.get(guild.id);
     const query = {
       rdv: { $lte: moment() },
       guildID: guild.id,
@@ -113,15 +113,19 @@ module.exports = async (client) => {
         const typeInfoLog = err
           ? client.config.TYPE.danger.label
           : client.config.TYPE.warning.label;
-        return logAction(
-          client,
-          message,
-          {
-            name: "clearEvents",
-            typeInfoLog,
-          },
-          feedback
-        );
+        if (message) {
+          return logAction(
+            client,
+            message,
+            {
+              name: "clearEvents",
+              typeInfoLog,
+            },
+            feedback
+          );
+        } else {
+          return true;
+        }
       });
     }
   };
