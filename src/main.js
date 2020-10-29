@@ -27,6 +27,5 @@ loadGuildsInfo(client);
 
 // log the bot, once loggedin removing all old events
 client.login(process.env.DISCORD_BOT_TOKEN).then(() => {
-  autoRemoveEvent(client);
   setInterval(() => autoRemoveEvent(client), 360 * 1000);
 });
