@@ -29,6 +29,6 @@ loadGuildsInfo(client);
 client
   .login(process.env.DISCORD_BOT_TOKEN)
   .then(() => {
-    setInterval(() => autoRemoveEvent(client), 5 * 1000);
+    setInterval(() => autoRemoveEvent(client), 360 * 1000);
   })
   .catch((err) => console.log("erreur attrapé ! Raison : ", err.message));
