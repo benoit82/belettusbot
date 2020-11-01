@@ -26,6 +26,9 @@ loadMongoose(client);
 loadGuildsInfo(client);
 
 // log the bot, once loggedin removing all old events
-client.login(process.env.DISCORD_BOT_TOKEN).then(() => {
-  setInterval(() => autoRemoveEvent(client), 360 * 1000);
-});
+client
+  .login(process.env.DISCORD_BOT_TOKEN)
+  .then(() => {
+    setInterval(() => autoRemoveEvent(client), 5 * 1000);
+  })
+  .catch((err) => console.log("erreur attrapé ! Raison : ", err.message));

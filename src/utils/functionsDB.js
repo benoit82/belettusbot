@@ -97,7 +97,7 @@ module.exports = async (client) => {
       guildID: guild.id,
     };
     const datas = await Event.find(query);
-    if (datas) {
+    if (datas && datas.length > 0) {
       const evtChannel = await channels.fetch(guildConfig.eventChannel);
       // unpin old event / setStatus on close
       datas.forEach(async (evt) => {
@@ -113,7 +113,7 @@ module.exports = async (client) => {
         const typeInfoLog = err
           ? client.config.TYPE.danger.label
           : client.config.TYPE.warning.label;
-        if (message) {
+        if (message !== undefined) {
           return logAction(
             client,
             message,
@@ -127,6 +127,12 @@ module.exports = async (client) => {
           return true;
         }
       });
+    } else {
+      console.log(
+        moment().format("llll") +
+          "-> Aucun évènement à effacer trouvé pour la guilde : " +
+          guild.name
+      );
     }
   };
 
