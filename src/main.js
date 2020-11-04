@@ -30,6 +30,6 @@ client
   .login(process.env.DISCORD_BOT_TOKEN)
   .then(() => {
     autoRemoveEvent(client);
-    setInterval(() => autoRemoveEvent(client), 60 * 60 * 1000);
+    setInterval(() => autoRemoveEvent(client), 12 * 60 * 60 * 1000);
   })
   .catch((err) => console.log("erreur attrapé ! Raison : ", err.message));
