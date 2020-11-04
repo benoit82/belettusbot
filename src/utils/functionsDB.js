@@ -113,6 +113,13 @@ module.exports = async (client) => {
         const typeInfoLog = err
           ? client.config.TYPE.danger.label
           : client.config.TYPE.warning.label;
+        console.log(
+          moment().format("llll") +
+            " -> RemoveOldEvents : " +
+            guild.name +
+            " : " +
+            feedback
+        );
         if (message !== undefined) {
           return logAction(
             client,
@@ -130,7 +137,7 @@ module.exports = async (client) => {
     } else {
       console.log(
         moment().format("llll") +
-          "-> Aucun évènement à effacer trouvé pour la guilde : " +
+          " -> RemoveOldEvents : Aucun évènement à effacer trouvé pour la guilde : " +
           guild.name
       );
     }
