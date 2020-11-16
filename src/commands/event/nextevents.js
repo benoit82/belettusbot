@@ -1,6 +1,5 @@
 const { MESSAGES } = require("../../utils/constants");
-const moment = require("moment");
-moment.locale("fr");
+const timeInterface = require("../../utils/timeInterface");
 
 module.exports.run = async (client, message, args) => {
   if (args[0] && parseInt(args[0]) === NaN)
@@ -16,7 +15,7 @@ module.exports.run = async (client, message, args) => {
         "Titre : **" +
           evt.title +
           "** - Date : **" +
-          moment(evt.rdv).format("LLLL") +
+          timeInterface(evt.rdv).format("LLLL") +
           "** - Inscrits : **" +
           evt.players.length +
           "** - Lien message : " +

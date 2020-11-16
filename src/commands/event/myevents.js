@@ -1,6 +1,5 @@
 const { MESSAGES } = require("../../utils/constants");
-const moment = require("moment");
-moment.locale("fr");
+const timeInterface = require("../../utils/timeInterface");
 
 module.exports.run = async (client, message, args) => {
   let events = await client.getActiveEventsByCreator(
@@ -20,7 +19,7 @@ module.exports.run = async (client, message, args) => {
           "` - Titre : **" +
           evt.title +
           "** - Date : **" +
-          moment(evt.rdv).format("LLLL") +
+          timeInterface(evt.rdv).format("LLLL") +
           "**\nStatus : **" +
           status +
           "** - Inscrits : **" +

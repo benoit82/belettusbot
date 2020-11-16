@@ -1,6 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const moment = require("moment");
-moment.locale("fr");
+const timeInterface = require("./timeInterface");
 
 exports.getFormatFromDate = (date) => {
   const toFormat = (num) => {
@@ -82,7 +81,7 @@ exports.embedCreateFromEvent = (client, message, event) => {
     )
     .addField(
       "`Heure du rendez-vous` : ",
-      `**${moment(event.rdv).format("LLLL")}**`
+      `**${timeInterface(event.rdv).format("LLLL")}**`
     )
     .setTimestamp();
 

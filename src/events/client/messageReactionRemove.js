@@ -1,5 +1,5 @@
 const { embedCreateFromEvent } = require("../../utils/functions");
-const moment = require("moment");
+const timeInterface = require("../../utils/timeInterface");
 
 module.exports = async (client, messageReaction, user) => {
   if (messageReaction.partial) await messageReaction.fetch();
@@ -11,7 +11,7 @@ module.exports = async (client, messageReaction, user) => {
   if (eventTarget) {
     if (
       eventTarget.status === client.config.EVENT_STATUS.open &&
-      moment(eventTarget.rdv).isAfter(Date.now())
+      timeInterface(eventTarget.rdv).isAfter(Date.now())
     ) {
       let players = [...eventTarget.players];
       players = eventTarget.players.filter((player) => player.id !== user.id);
@@ -22,7 +22,7 @@ module.exports = async (client, messageReaction, user) => {
     } else {
       if (
         eventTarget.status !== client.config.EVENT_STATUS.close &&
-        moment(eventTarget.rdv).isBefore(moment())
+        timeInterface(eventTarget.rdv).isBefore(Date.now())
       ) {
         eventTarget = await client.updateEvent(eventTarget, {
           status: client.config.EVENT_STATUS.close,

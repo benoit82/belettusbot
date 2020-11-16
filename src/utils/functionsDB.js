@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
 const { Guild, Event, Template } = require("../models");
-const moment = require("moment");
+const timeInterface = require("./timeInterface");
 const { logAction } = require("./botlog");
 const { embedCreateFromEvent } = require("./functions");
-moment.locale("fr");
 
 module.exports = async (client) => {
   client.createGuild = async (guild) => {
@@ -53,9 +52,9 @@ module.exports = async (client) => {
     try {
       const eventCreated = await createEvt.save();
       channel.send(
-        `Evènement créé => ${event.title} pour le **${moment(event.rdv).format(
-          "LLLL"
-        )}**`
+        `Evènement créé => ${event.title} pour le **${timeInterface(
+          event.rdv
+        ).format("LLLL")}**`
       );
       return eventCreated;
     } catch (error) {
@@ -84,7 +83,7 @@ module.exports = async (client) => {
     const datas = await Event.find({
       status: client.config.EVENT_STATUS.open,
       guildID: guild.id,
-      rdv: { $gte: moment(), $lte: moment().add(days, "days") },
+      rdv: { $gte: timeInterface(), $lte: timeInterface().add(days, "day") },
     });
     return datas ? datas : null;
   };
@@ -93,7 +92,7 @@ module.exports = async (client) => {
     const { channels } = client;
     const guildConfig = client.guildsConfig.get(guild.id);
     const query = {
-      rdv: { $lte: moment() },
+      rdv: { $lte: timeInterface() },
       guildID: guild.id,
     };
     const datas = await Event.find(query);
@@ -114,7 +113,7 @@ module.exports = async (client) => {
           ? client.config.TYPE.danger.label
           : client.config.TYPE.warning.label;
         console.log(
-          moment().format("llll") +
+          timeInterface().format("llll") +
             " -> RemoveOldEvents : " +
             guild.name +
             " : " +
@@ -136,7 +135,7 @@ module.exports = async (client) => {
       });
     } else {
       console.log(
-        moment().format("llll") +
+        timeInterface().format("llll") +
           " -> RemoveOldEvents : Aucun évènement à effacer trouvé pour la guilde : " +
           guild.name
       );

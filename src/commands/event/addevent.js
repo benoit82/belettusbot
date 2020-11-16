@@ -4,9 +4,8 @@ const {
   embedCreateFromEvent,
 } = require("../../utils/functions");
 const { MessageCollector } = require("discord.js");
-const moment = require("moment");
+const timeInterface = require("../../utils/timeInterface");
 const { logAction } = require("../../utils/botlog");
-moment.locale("fr");
 
 module.exports.run = (client, message, args) => {
   const guildConfig = client.guildsConfig.get(message.guild.id);
@@ -16,7 +15,7 @@ Pour plus d'information sur la commande, tapes la commande \`${guildConfig.prefi
   const nowFormat = getFormatFromDate(new Date());
   const dateFormatShowExample = `Merci de respecter ce format de saisie : ***\`${
     client.config.RDV_FORMAT
-  }\`***\n  Exemple : \`${nowFormat}\` pour le \`${moment(
+  }\`***\n  Exemple : \`${nowFormat}\` pour le \`${timeInterface(
     nowFormat,
     "DDMMYYYY HH mm"
   ).format("LLLL")}\``;
@@ -92,8 +91,11 @@ Pour plus d'information sur la commande, tapes la commande \`${guildConfig.prefi
         );
       } else {
         // date management
-        let rdv = moment(rdvArgs.slice(0, 3).join(), "DDMMYYYYHHmm").toJSON();
-        if (rdv !== null && moment(rdv).isAfter(Date.now())) {
+        let rdv = timeInterface(
+          rdvArgs.slice(0, 3).join(),
+          "DDMMYYYYHHmm"
+        ).toJSON();
+        if (rdv !== null && timeInterface(rdv).isAfter(Date.now())) {
           try {
             await recordEvent({
               ...newEvent,
@@ -134,7 +136,7 @@ Pour plus d'information sur la commande, tapes la commande \`${guildConfig.prefi
         "Le format du rendez-vous n'est pas respecté. Commande annulée."
       );
     }
-    const rdv = moment(args.slice(1).join(), "DDMMYYYYHHmm").toJSON();
+    const rdv = timeInterface(args.slice(1).join(), "DDMMYYYYHHmm").toJSON();
     //check if the template name exist in DB
     const templateFromDB = await client.getTemplateByName(
       templateName,
@@ -146,7 +148,7 @@ Pour plus d'information sur la commande, tapes la commande \`${guildConfig.prefi
       return message.reply(`Le modèle \`${templateName}\` n'existe pas.
 Consultes la liste des modèles par la commande \`${guildConfig.prefix}eventtemplate list\`.`);
     }
-    if (rdv !== null && moment(rdv).isAfter(Date.now())) {
+    if (rdv !== null && timeInterface(rdv).isAfter(Date.now())) {
       try {
         await recordEvent({
           title: templateFromDB.title,

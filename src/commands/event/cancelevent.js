@@ -1,7 +1,6 @@
 const { MESSAGES } = require("../../utils/constants");
 const { embedCreateFromEvent } = require("../../utils/functions");
-const moment = require("moment");
-moment.locale("fr");
+const timeInterface = require("../../utils/timeInterface");
 
 module.exports.run = async (client, message, args) => {
   const { channels } = client;
@@ -38,11 +37,11 @@ module.exports.run = async (client, message, args) => {
           client.users.cache
             .get(player.id)
             .send(
-              `L'évènement **${eventTarget.title}** prévu pour le **${moment(
-                eventTarget.rdv
-              ).format("LLLL")}**, vient d'être annulé par <@${
-                message.author.id
-              }>.`
+              `L'évènement **${
+                eventTarget.title
+              }** prévu pour le **${timeInterface(eventTarget.rdv).format(
+                "LLLL"
+              )}**, vient d'être annulé par <@${message.author.id}>.`
             );
         });
       }
