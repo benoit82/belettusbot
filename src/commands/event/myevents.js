@@ -1,36 +1,36 @@
-const { MESSAGES } = require("../../utils/constants");
-const timeInterface = require("../../utils/timeInterface");
+const { MESSAGES } = require('../../utils/constants')
+const timeInterface = require('../../utils/timeInterface')
 
 module.exports.run = async (client, message, args) => {
   let events = await client.getActiveEventsByCreator(
     message.author,
     message.guild
-  );
+  )
   if (events && events.length > 0) {
     events = events.sort((e1, e2) => {
-      return e1.rdv > e2.rdv ? 1 : -1;
-    });
+      return e1.rdv > e2.rdv ? 1 : -1
+    })
     events.forEach((evt) => {
       const status =
-        evt.status === client.config.EVENT_STATUS.open ? "Actif" : "Annulé";
+        evt.status === client.config.EVENT_STATUS.open ? 'Actif' : 'Annulé'
       message.channel.send(
-        "ID : `" +
+        'ID : `' +
           evt.messageID +
-          "` - Titre : **" +
+          '` - Titre : **' +
           evt.title +
-          "** - Date : **" +
-          timeInterface(evt.rdv).format("LLLL") +
-          "**\nStatus : **" +
+          '** - Date : **' +
+          timeInterface(evt.rdv).format('LLLL') +
+          '**\nStatus : **' +
           status +
-          "** - Inscrits : **" +
+          '** - Inscrits : **' +
           evt.players.length +
-          "** - Lien message : " +
+          '** - Lien message : ' +
           evt.messageLink
-      );
-    });
+      )
+    })
   } else {
-    message.reply("Tu n'as pas d'évènement créé en cours.");
+    message.reply("Tu n'as pas d'évènement créé en cours.")
   }
-};
+}
 
-module.exports.help = MESSAGES.COMMANDS.EVENT.MYEVENTS;
+module.exports.help = MESSAGES.COMMANDS.EVENT.MYEVENTS

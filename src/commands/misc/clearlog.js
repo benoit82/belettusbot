@@ -1,19 +1,19 @@
-const { MESSAGES } = require("../../utils/constants");
-const { MessageCollector } = require("discord.js");
-const { logAction } = require("../../utils/botlog");
+const { MESSAGES } = require('../../utils/constants')
+const { MessageCollector } = require('discord.js')
+const { logAction } = require('../../utils/botlog')
 
 module.exports.run = async (client, message, args) => {
-  const { PREFIX, TYPE } = client.config;
-  if (args[0] === "all") {
-    const time = 5000;
+  const { PREFIX, TYPE } = client.config
+  if (args[0] === 'all') {
+    const time = 5000
     const collector = new MessageCollector(
       message.channel,
       (m) => m.author.id === message.author.id,
       { time }
-    );
+    )
     const cancelCmdConfirm = setTimeout(() => {
-      message.reply("Commande annulée");
-    }, time);
+      message.reply('Commande annulée')
+    }, time)
 
     // confirm before clean all channel messages
     message.reply(
@@ -21,30 +21,29 @@ module.exports.run = async (client, message, args) => {
 Réponds par \`oui\` sous ${
         time / 1000
       } secondes pour valider, sinon la commande sera annulée.`
-    );
+    )
 
-    collector.on("collect", async (msg) => {
-      if (msg.content === "oui") {
-        const messages = await message.channel.messages.fetch();
-        await message.channel.bulkDelete(messages, true);
-        this.help.typeInfoLog = TYPE.danger.label;
+    collector.on('collect', async (msg) => {
+      if (msg.content === 'oui') {
+        const messages = await message.channel.messages.fetch()
+        await message.channel.bulkDelete(messages, true)
+        this.help.typeInfoLog = TYPE.danger.label
         logAction(
           client,
           message,
           this.help,
-          "Canal de discution totalement purgé."
-        );
-        clearTimeout(cancelCmdConfirm);
+          'Canal de discution totalement purgé.'
+        )
+        clearTimeout(cancelCmdConfirm)
       }
-    });
+    })
   } else {
-    const messages = await message.channel.messages.fetch();
+    const messages = await message.channel.messages.fetch()
     await messages.forEach((message) => {
-      if (message.content.startsWith(PREFIX) || message.author.bot)
-        message.delete();
-    });
-    logAction(client, message, this.help, "Canal de discution nétoyé.");
+      if (message.content.startsWith(PREFIX) || message.author.bot) { message.delete() }
+    })
+    logAction(client, message, this.help, 'Canal de discution nétoyé.')
   }
-};
+}
 
-module.exports.help = MESSAGES.COMMANDS.MISC.CLEARLOG;
+module.exports.help = MESSAGES.COMMANDS.MISC.CLEARLOG

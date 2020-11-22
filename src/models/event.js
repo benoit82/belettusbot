@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { EVENT_STATUS } = require("../config");
+const mongoose = require('mongoose')
+const { EVENT_STATUS } = require('../config')
 
 const eventSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
@@ -14,12 +14,12 @@ const eventSchema = mongoose.Schema({
   creator: String, // member guild tag
   createdAt: {
     type: Number,
-    default: () => Math.floor(Date.now() / 1000),
+    default: () => Math.floor(Date.now() / 1000)
   },
   status: {
     type: String,
-    default: EVENT_STATUS.open,
-  },
-});
+    default: EVENT_STATUS.open
+  }
+})
 
-module.exports = mongoose.model("Event", eventSchema);
+module.exports = mongoose.model('Event', eventSchema)

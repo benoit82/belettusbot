@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const { DEFAULTSETTINGS: defaults } = require("../config");
+const mongoose = require('mongoose')
+const { DEFAULTSETTINGS: defaults } = require('../config')
 
 const guildSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
@@ -7,22 +7,22 @@ const guildSchema = mongoose.Schema({
   guildName: String,
   logChannel: {
     type: String,
-    default: defaults.logChannel,
+    default: defaults.logChannel
   },
   eventChannel: {
     type: String,
-    default: defaults.eventChannel,
+    default: defaults.eventChannel
   },
   prefix: {
     type: String,
-    default: defaults.prefix,
+    default: defaults.prefix
   },
   reactRoles: {
     Tanks: { type: Array, default: [] },
     Healers: { type: Array, default: [] },
     DPS: { type: Array, default: [] },
-    Flex: { type: Array, default: [] },
-  },
-});
+    Flex: { type: Array, default: [] }
+  }
+})
 
-module.exports = mongoose.model("Guild", guildSchema);
+module.exports = mongoose.model('Guild', guildSchema)

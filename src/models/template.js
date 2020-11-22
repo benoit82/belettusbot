@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 const templateSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
@@ -10,12 +10,12 @@ const templateSchema = mongoose.Schema({
   guildID: String,
   createdAt: {
     type: Number,
-    default: () => Math.floor(Date.now() / 1000),
+    default: () => Math.floor(Date.now() / 1000)
   },
   lang: {
     type: String,
-    default: "fr",
-  },
-});
+    default: 'fr'
+  }
+})
 
-module.exports = mongoose.model("Template", templateSchema);
+module.exports = mongoose.model('Template', templateSchema)
