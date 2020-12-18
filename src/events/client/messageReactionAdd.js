@@ -29,9 +29,11 @@ module.exports = async (client, messageReaction, user) => {
       ]
       // update eventTarget variable
       eventTarget = await client.updateEvent(eventTarget, { players })
-      const embed = embedCreateFromEvent(client, message, eventTarget)
-      // update the event message
-      message.edit(embed)
+      setTimeout(() => {
+        const embed = embedCreateFromEvent(client, message, eventTarget)
+        // update the event message
+        message.edit(embed)
+      }, 750)
     } else {
       if (
         eventTarget.status !== client.config.EVENT_STATUS.close &&
