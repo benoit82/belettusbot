@@ -4,8 +4,8 @@ const timeInterface = require('../../utils/timeInterface')
 module.exports = async (client, messageReaction, user) => {
   if (messageReaction.partial) await messageReaction.fetch()
   const { message } = messageReaction
+  await message.fetch()
   const guildConfig = client.guildsConfig.get(message.guild.id)
-
   // event case
   if (!message.channel.id === guildConfig.eventChannel) return
 

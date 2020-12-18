@@ -4,9 +4,12 @@ const { CD_COMMAND_DEFAULT } = require('../../config')
 
 module.exports = async (client, message) => {
   if (message.author.bot) return
+  if (message.partial) await message.fetch()
   const guildConfig = client.guildsConfig.get(message.guild.id)
   if (!message.content.startsWith(guildConfig.prefix)) return
-  if (message.channel.type === 'dm') { return client.emit('directMessage', message) }
+  if (message.channel.type === 'dm') {
+    return client.emit('directMessage', message)
+  }
 
   const args = message.content
     .trim()
@@ -17,7 +20,7 @@ module.exports = async (client, message) => {
   const command =
     client.commands.get(commandName) ||
     client.commands.find(
-      (cmd) => cmd.help.aliases && cmd.help.aliases.includes(commandName)
+      cmd => cmd.help.aliases && cmd.help.aliases.includes(commandName)
     )
   if (!command) return
 
@@ -41,8 +44,10 @@ module.exports = async (client, message) => {
   // args checker
   if (command.help.args && !args.length) {
     let noArgsReply = `Il faut des arguments pour cette commande, ${message.author}.`
-    if (command.help.usage) { noArgsReply += '\nVoici comment utiliser la commande :' }
-    command.help.usage.forEach((u) => {
+    if (command.help.usage) {
+      noArgsReply += '\nVoici comment utiliser la commande :'
+    }
+    command.help.usage.forEach(u => {
       noArgsReply += `\n \`${guildConfig.prefix}${command.help.name} ${u}\``
     })
     return message.channel.send(noArgsReply)
